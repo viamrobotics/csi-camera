@@ -151,7 +151,7 @@ class CSICamera : public Camera {
             } else {
                 image.bytes = get_csi_image();
                 if (image.bytes.empty()) {
-                    std::err << "ERROR: no bytes retrieved" << std::endl;
+                    std::cerr << "ERROR: no bytes retrieved" << std::endl;
                 }
             }
 
