@@ -44,6 +44,11 @@ class CSICamera : public Camera {
             init_csi(pipeline_args);
         }
 
+        ~CSICamera() {
+            // Close out GST pipeline during shutdown
+            stop_pipeline();
+        }
+
         void validate_attrs(AttributeMap attrs) {
             if (attrs->count("width_px") == 1) {
                 std::shared_ptr<ProtoType> width_proto = attrs->at("width_px");
