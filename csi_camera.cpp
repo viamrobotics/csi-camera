@@ -148,10 +148,11 @@ class CSICamera : public Camera {
             image.mime_type = DEFAULT_OUTPUT_MIMETYPE;
             if (FAKE_CAMERA) {
                 image.bytes = get_test_image();
-                return image;
             } else {
-                // TODO: handle no bytes retrieved
                 image.bytes = get_csi_image();
+                if (image.bytes.empty()) {
+                    std::err << "ERROR: no bytes retrieved" << std::endl;
+                }
             }
 
             return image;
