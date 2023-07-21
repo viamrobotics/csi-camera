@@ -8,7 +8,7 @@
 
 using namespace viam::sdk;
 
-CSICamera::CSICamera(std::string name, AttributeMap attrs) : Camera(std::move(name)) {
+CSICamera::CSICamera(const std::string name, const AttributeMap attrs) : Camera(std::move(name)) {
     std::cout << "Creating CSICamera with name: " << name << std::endl;
     init(attrs);
 }
@@ -19,7 +19,7 @@ CSICamera::~CSICamera() {
     stop_pipeline();
 }
 
-void CSICamera::init(AttributeMap attrs) {
+void CSICamera::init(const AttributeMap attrs) {
     validate_attrs(attrs);
     std::string pipeline_args = create_pipeline();
     if (debug) {
@@ -30,7 +30,7 @@ void CSICamera::init(AttributeMap attrs) {
     return;
 }
 
-void CSICamera::validate_attrs(AttributeMap attrs) {
+void CSICamera::validate_attrs(const AttributeMap attrs) {
     if (attrs->count("width_px") == 1) {
         std::shared_ptr<ProtoType> width_proto = attrs->at("width_px");
         auto width_value = width_proto->proto_value();
@@ -95,7 +95,7 @@ void CSICamera::validate_attrs(AttributeMap attrs) {
     return;
 }
 
-void CSICamera::reconfigure(Dependencies deps, ResourceConfig cfg) {
+void CSICamera::reconfigure(const Dependencies deps, const ResourceConfig cfg) {
     if (debug) {
         std::cout << "Reconfiguring CSI Camera module" << std::endl;
     }
@@ -106,7 +106,7 @@ void CSICamera::reconfigure(Dependencies deps, ResourceConfig cfg) {
     return;
 }
 
-Camera::raw_image CSICamera::get_image(std::string mime_type) {
+Camera::raw_image CSICamera::get_image(const std::string mime_type) {
     if (debug) {
         std::cout << "hit get_image. expecting mime_type " << mime_type << std::endl;
     }
@@ -124,12 +124,12 @@ Camera::raw_image CSICamera::get_image(std::string mime_type) {
     return image;
 }
 
-AttributeMap CSICamera::do_command(AttributeMap command) {
+AttributeMap CSICamera::do_command(const AttributeMap command) {
     std::cerr << "do_command not implemented" << std::endl;
     return 0;
 }
 
-Camera::point_cloud CSICamera::get_point_cloud(std::string mime_type) {
+Camera::point_cloud CSICamera::get_point_cloud(const std::string mime_type) {
     std::cerr << "get_point_cloud not implemented" << std::endl;
     return point_cloud{};
 }
@@ -144,7 +144,7 @@ Camera::properties CSICamera::get_properties() {
     return properties{};
 }
 
-void CSICamera::init_csi(std::string pipeline_args) {
+void CSICamera::init_csi(const std::string pipeline_args) {
     // Build gst pipeline
     pipeline = gst_parse_launch(
         pipeline_args.c_str(),

@@ -34,18 +34,18 @@ private:
 
 public:
     // Module
-    explicit CSICamera(std::string name, AttributeMap attrs);
+    explicit CSICamera(const std::string name, const AttributeMap attrs);
     ~CSICamera();
-    void init(AttributeMap attrs);
-    void init_csi(std::string pipeline_args);
-    void validate_attrs(AttributeMap attrs);
+    void init(const AttributeMap attrs);
+    void init_csi(const std::string pipeline_args);
+    void validate_attrs(const AttributeMap attrs);
 
     // Camera
     // overrides camera component interface
-    void reconfigure(Dependencies deps, ResourceConfig cfg) override;
-    raw_image get_image(std::string mime_type) override;
-    AttributeMap do_command(AttributeMap command) override;
-    point_cloud get_point_cloud(std::string mime_type) override;
+    void reconfigure(const Dependencies deps, const ResourceConfig cfg) override;
+    raw_image get_image(const std::string mime_type) override;
+    AttributeMap do_command(const AttributeMap command) override;
+    point_cloud get_point_cloud(const std::string mime_type) override;
     std::vector<GeometryConfig> get_geometries() override;
     properties get_properties() override;
 
