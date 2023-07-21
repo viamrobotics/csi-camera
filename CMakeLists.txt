@@ -34,7 +34,7 @@ link_directories(
 )
 
 # Main executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp csi_camera.cpp)
 
 target_link_libraries(${PROJECT_NAME} 
         ${GSTREAMER_LIBRARIES} 

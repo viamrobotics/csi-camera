@@ -8,7 +8,7 @@
 #include <viam/sdk/components/camera/server.hpp>
 
 #include "constraints.h"
-#include "csi_camera.cpp"
+#include "csi_camera.h"
 
 using namespace viam::sdk;
 
