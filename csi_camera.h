@@ -14,9 +14,6 @@ using namespace viam::sdk;
 
 class CSICamera : public Camera {
 private:
-    // Module
-    std::string name;
-
     // Camera
     bool debug;
     int width_px = 0;

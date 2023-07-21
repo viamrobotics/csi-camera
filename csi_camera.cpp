@@ -195,7 +195,7 @@ void CSICamera::init_csi(const std::string pipeline_args) {
 void CSICamera::wait_pipeline() {
     GstState state, pending;
     GstStateChangeReturn ret;
-    while ((ret = gst_element_get_state(pipeline, &state, &pending, GST_CLOCK_TIME_NONE)) == GST_STATE_CHANGE_ASYNC) {
+    while ((ret = gst_element_get_state(pipeline, &state, &pending, GST_SECOND)) == GST_STATE_CHANGE_ASYNC) {
         // wait for state change to complete
     }
 
