@@ -3,9 +3,6 @@
 #include <cstring>
 #include <sstream>
 
-#include <viam/sdk/components/camera/camera.hpp>
-#include <viam/api/component/camera/v1/camera.grpc.pb.h>
-
 #include "constraints.h"
 #include "csi_camera.h"
 

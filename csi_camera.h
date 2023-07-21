@@ -33,15 +33,15 @@ private:
     GstElement* appsink = nullptr;
 
 public:
-    // Init
+    // Module
     explicit CSICamera(std::string name, AttributeMap attrs);
     ~CSICamera();
     void init(AttributeMap attrs);
     void init_csi(std::string pipeline_args);
     void validate_attrs(AttributeMap attrs);
 
-    // Camera Overrides
-    // defines camera component interface
+    // Camera
+    // overrides camera component interface
     void reconfigure(Dependencies deps, ResourceConfig cfg) override;
     raw_image get_image(std::string mime_type) override;
     AttributeMap do_command(AttributeMap command) override;
@@ -57,7 +57,7 @@ public:
     void catch_pipeline();
 
     // Image 
-    // helpers to pull images from appsink
+    // helpers to pull and process images from appsink
     std::vector<unsigned char> get_csi_image();
     std::vector<unsigned char> buff_to_vec(GstBuffer *buff);
     std::vector<unsigned char> get_test_image();
