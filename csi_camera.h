@@ -48,7 +48,7 @@ public:
 
     // GST 
     // helpers to manage GStreamer pipeline lifecycle
-    std::string create_pipeline();
+    std::string create_pipeline() const;
     void wait_pipeline();
     void stop_pipeline();
     void catch_pipeline();

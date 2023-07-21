@@ -21,7 +21,7 @@ CSICamera::~CSICamera() {
 
 void CSICamera::init(const AttributeMap attrs) {
     validate_attrs(attrs);
-    std::string pipeline_args = create_pipeline();
+    auto pipeline_args = create_pipeline();
     if (debug) {
         std::cout << "pipeline_args: " << pipeline_args << std::endl;
     }
@@ -311,7 +311,7 @@ std::vector<unsigned char> CSICamera::get_csi_image() {
 }
 
 
-std::string CSICamera::create_pipeline() {
+std::string CSICamera::create_pipeline() const {
     std::ostringstream oss;
 
     oss << DEFAULT_INPUT_SOURCE << " sensor_id=" << video_path
