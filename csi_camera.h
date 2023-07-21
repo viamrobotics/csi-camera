@@ -33,7 +33,7 @@ private:
     GstElement* appsink = nullptr;
 
 public:
-    // Constructors
+    // Init
     explicit CSICamera(std::string name, AttributeMap attrs);
     ~CSICamera();
     void init(AttributeMap attrs);
@@ -44,7 +44,6 @@ public:
     // defines camera component interface
     void reconfigure(Dependencies deps, ResourceConfig cfg) override;
     raw_image get_image(std::string mime_type) override;
-    // API dynamic_api() const override;
     AttributeMap do_command(AttributeMap command) override;
     point_cloud get_point_cloud(std::string mime_type) override;
     std::vector<GeometryConfig> get_geometries() override;
