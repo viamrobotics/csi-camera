@@ -64,7 +64,6 @@ class CSICamera : public Camera {
                 }
             }
             if (!width_px) {
-                std::cout << "ERROR: width_px attribute not found" << std::endl;
                 std::cout << "Setting width_px to default value: " << DEFAULT_INPUT_WIDTH << std::endl;
                 width_px = DEFAULT_INPUT_WIDTH;
             }
@@ -78,7 +77,6 @@ class CSICamera : public Camera {
                 }
             }
             if (!height_px) {
-                std::cout << "ERROR: height_px attribute not found" << std::endl;
                 std::cout << "Setting height_px to default value: " << DEFAULT_INPUT_HEIGHT << std::endl;
                 height_px = DEFAULT_INPUT_HEIGHT;
             }
@@ -92,7 +90,6 @@ class CSICamera : public Camera {
                 }
             }
             if (!frame_rate) {
-                std::cout << "ERROR: frame_rate attribute not found" << std::endl;
                 std::cout << "Setting frame_rate to default value: " << DEFAULT_INPUT_FRAMERATE << std::endl;
                 frame_rate = DEFAULT_INPUT_FRAMERATE;
             }
@@ -106,7 +103,6 @@ class CSICamera : public Camera {
                 }
             }
             if (video_path.empty() ) {
-                std::cout << "ERROR: video_path attribute not found" << std::endl;
                 std::cout << "Setting video_path to default value: " << DEFAULT_INPUT_SENSOR << std::endl;
                 video_path = DEFAULT_INPUT_SENSOR;
             }
