@@ -31,6 +31,16 @@ class CSICamera : public Camera {
     
     public:
         explicit CSICamera(std::string name, AttributeMap attrs) : Camera(std::move(name)) {
+            std::cout << "Creating CSICamera with name: " << name << std::endl;
+            init(attrs);
+        }
+
+        ~CSICamera() {
+            // Close out GST pipeline during shutdown
+            stop_pipeline();
+        }
+
+        void init(AttributeMap attrs) {
             // Validate attributes
             validate_attrs(attrs);
 
@@ -42,11 +52,6 @@ class CSICamera : public Camera {
             
             // Start GST pipeline
             init_csi(pipeline_args);
-        }
-
-        ~CSICamera() {
-            // Close out GST pipeline during shutdown
-            stop_pipeline();
         }
 
         void validate_attrs(AttributeMap attrs) {
@@ -88,7 +93,7 @@ class CSICamera : public Camera {
             }
             if (!frame_rate) {
                 std::cout << "ERROR: frame_rate attribute not found" << std::endl;
-                std::cout << "Setting frame_rate to default value: " << DEFAULT_INPUT_SENSOR<< std::endl;
+                std::cout << "Setting frame_rate to default value: " << DEFAULT_INPUT_FRAMERATE << std::endl;
                 frame_rate = DEFAULT_INPUT_FRAMERATE;
             }
             
@@ -116,28 +121,17 @@ class CSICamera : public Camera {
             }
         }
 
-        // OVERRIDE
-
         void reconfigure(Dependencies deps, ResourceConfig cfg) override {
             if (debug) {
                 std::cout << "Reconfiguring CSI Camera module" << std::endl;
             }
 
-            // Update attributes
-            auto attrs = cfg.attributes();
-            validate_attrs(attrs);
-
             // Stop gst pipeline
             stop_pipeline();
 
-            // Create GST pipeline
-            std::string pipeline_args = create_pipeline();
-            if (debug) {
-                std::cout << "pipeline_args: " << pipeline_args << std::endl;
-            }
-
-            // Start GST pipeline
-            init_csi(pipeline_args);
+            // Re-initate with new attributes
+            auto attrs = cfg.attributes();
+            init(attrs);
         }
 
         raw_image get_image(std::string mime_type) override {

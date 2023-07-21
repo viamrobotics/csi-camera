@@ -104,6 +104,7 @@ arducam:
 	chmod +x install_full.sh && \
 	./install_full.sh -m imx477
 
+# Restarts argus service on Jetson. Run this if argus is broken.
 restart-argus:
 	sudo systemctl stop nvargus-daemon && \
 	sudo systemctl start nvargus-daemon && \
