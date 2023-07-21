@@ -23,10 +23,6 @@ package:
 	cd etc && \
 	appimage-builder --recipe viam-csi-jetson-arm64.yml
 
-pi-package:
-	cd etc && \
-	appimage-builder --recipe viam-csi-pi-arm64.yml
-
 # Builds docker image with viam-cpp-sdk and viam-csi installed.
 image:
 	rm -rf build | true && \
@@ -34,11 +30,6 @@ image:
 		--memory=16g \
 		--build-arg TAG=$(L4T_VERSION) \
 		-f ./etc/Dockerfile.jetson ./
-
-pi-image:
-	docker build -t $(IMAGE_NAME)-pi:$(IMAGE_TAG) \
-		--memory=16g \
-		-f ./etc/Dockerfile.pi ./
 
 # Runs docker image with shell.
 docker-module:
@@ -112,3 +103,8 @@ arducam:
 	wget https://github.com/ArduCAM/MIPI_Camera/releases/download/v0.0.3/install_full.sh && \
 	chmod +x install_full.sh && \
 	./install_full.sh -m imx477
+
+restart-argus:
+	sudo systemctl stop nvargus-daemon && \
+	sudo systemctl start nvargus-daemon && \
+	sudo systemctl status nvargus-daemon
