@@ -35,8 +35,6 @@ AppDir:
     - sourceline: deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main
     - sourceline: deb https://repo.download.nvidia.com/jetson/common r35.3 main
     - sourceline: deb https://repo.download.nvidia.com/jetson/t234 r35.3 main
-    - sourceline: deb [signed-by=/usr/share/keyrings/cudnn-local-tegra-3763B8C9-keyring.gpg]
-        file:///var/cudnn-local-tegra-repo-ubuntu2004-8.6.0.166 /
     - sourceline: deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg]
         https://apt.kitware.com/ubuntu/ focal main
     include:
@@ -45,13 +43,8 @@ AppDir:
     - zlib1g:arm64
   files:
     include:
-    - gstreamer1.0-x
-    - gstreamer1.0-alsa
     - gstreamer1.0-plugins-base
     - gstreamer1.0-plugins-good
-    - gstreamer1.0-plugins-bad
-    - gstreamer1.0-plugins-ugly
-    - gstreamer1.0-pulseaudio
     - /usr/local/lib/libprotobuf.so.32
     - /usr/local/lib/libviamsdk.so.noabi
 
