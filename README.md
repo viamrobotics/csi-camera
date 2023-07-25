@@ -3,16 +3,13 @@
 
 ![](./etc/viam-server.png)
 
-
-> **Warning** Currently in ALPHA and only supports Jetson. Please open an issue if you run into problems.
-
 ___
 
 ### why?
 
-Want to use CSI cameras with viam? This is the module for you.
+Want to use CSI Cameras with viam? This is the module for you.
 
-Most embedded cameras do not have an onboard [ISP](https://en.wikipedia.org/wiki/Image_processor) (image signal processor) and instead rely on the host machine for things like debayering, gamma-curve adjustments, gain control, white balance, and color correction.
+Most embedded cameras do not have an onboard [ISP](https://en.wikipedia.org/wiki/Image_processor) (Image Signal Processor) and instead rely on the host machine for things like debayering, gamma-curve adjustments, gain control, white balance, and color correction.
 
 ISPs are hard, so why roll your own? There are great libraries out there like [libargus](https://docs.nvidia.com/jetson/l4t-multimedia/group__LibargusAPI.html) and [libcamera](https://github.com/kbingham/libcamera).
 
@@ -39,6 +36,8 @@ ___
 
 ### support
 
-Check [SUPPORT.md](./doc/SUPPORT.md) for a more comprehensive list of tested setups.
-- [x] jetson
-- [ ] pi
+- [x] Jetson
+- [ ] Pi
+
+
+View [SUPPORT.md](./doc/SUPPORT.md) for a more comprehensive list of tested setups and [JETSON.md](./doc/JETSON.md) for Jetson attribute options.
