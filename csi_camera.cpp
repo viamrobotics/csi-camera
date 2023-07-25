@@ -2,6 +2,8 @@
 #include <fstream>
 #include <cstring>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 #include "constraints.h"
 #include "csi_camera.h"
@@ -195,8 +197,27 @@ void CSICamera::init_csi(const std::string pipeline_args) {
 void CSICamera::wait_pipeline() {
     GstState state, pending;
     GstStateChangeReturn ret;
+
+    // Set timeout for state change
+    // TODO: make timeout configurable
+    const int timeout_seconds = 5;
+    const int timeout_microseconds = timeout_seconds * 1000000; // Convert seconds to microseconds
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    // wait for state change to complete
     while ((ret = gst_element_get_state(pipeline, &state, &pending, GST_SECOND)) == GST_STATE_CHANGE_ASYNC) {
-        // wait for state change to complete
+        auto current_time = std::chrono::high_resolution_clock::now();
+        auto elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(current_time - start_time).count();
+
+        // If state change takes longer than timeout, exit
+        if (elapsed_time >= timeout_microseconds) {
+            // Timeout occurred
+            std::cerr << "Timeout: GST pipeline state change did not complete within 5 seconds" << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
+
+        // Wait for a short duration to avoid busy waiting
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     if (ret == GST_STATE_CHANGE_SUCCESS) {
