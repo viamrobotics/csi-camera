@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(viam-csi
-        VERSION 0.0.2
+        VERSION 0.0.1
         DESCRIPTION "viam module for csi cameras"
 )
 
@@ -14,7 +14,6 @@ set(LOCAL_INCLUDE_PATH /usr/local/include)
 
 enable_testing()
 find_package(GTest REQUIRED)
-
 find_package(PkgConfig REQUIRED)
 find_package(viam-cpp-sdk CONFIG REQUIRED)
 pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0 gstreamer-app-1.0 gstreamer-base-1.0)

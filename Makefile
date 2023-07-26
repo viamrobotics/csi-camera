@@ -5,7 +5,7 @@ BIN_DIR := ./bin
 
 # Docker
 IMAGE_NAME := viam-csi
-IMAGE_TAG := 0.0.2
+IMAGE_TAG := 0.0.1
 L4T_VERSION := 35.3.1
 
 # Module
