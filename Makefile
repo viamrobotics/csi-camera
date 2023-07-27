@@ -4,9 +4,17 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-IMAGE_NAME := viam-csi
-IMAGE_TAG := 0.0.1
-L4T_VERSION := 35.3.1
+BASE_NAME := viam-cpp-jetson
+BASE_TAG := 0.0.1
+MOD_NAME := viam-csi-module
+MOD_TAG := 0.0.1
+TEST_NAME := viam-csi-tests
+TESET_TAG := 0.0.1
+L4T_TAG := 35.3.1
+
+# Package
+PACK_TAG := 0.0.1
+APP_DIR := './build/AppDir'
 
 # Module
 # Builds/installs module.
@@ -23,32 +31,42 @@ package:
 	cd etc && \
 	appimage-builder --recipe viam-csi-jetson-arm64.yml
 
-# Builds docker image with viam-cpp-sdk and viam-csi installed.
-image:
-	rm -rf build | true && \
-	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) \
+# Builds docker image with viam-cpp-sdk and helpers.
+image-base:
+	docker build -t $(BASE_NAME):$(BASE_TAG) \
 		--memory=16g \
-		--build-arg TAG=$(L4T_VERSION) \
-		-f ./etc/Dockerfile.jetson ./
+		--build-arg L4T_TAG=$(L4T_TAG) \
+		-f ./etc/Dockerfile.base.jetson ./
 
-# Runs docker image with shell.
-docker-module:
+# Builds docker image with viam-csi installed.
+image-mod:
+	docker build -t $(MOD_NAME):$(MOD_TAG) \
+		--build-arg BASE_TAG=$(BASE_TAG) \
+		--build-arg BASE_NAME=$(BASE_NAME) \
+		-f ./etc/Dockerfile.mod.jetson ./
+
+# Builds raw L4T docker image viam-csi appimage.
+image-test:
+	docker build -t $(TEST_NAME):$(TEST_TAG) \
+		--build-arg L4T_TAG=$(L4T_TAG) \
+		-f ./etc/Dockerfile.mod.jetson ./ \
 	docker run \
 		--device /dev/fuse \
 		--cap-add SYS_ADMIN \
-		-it $(IMAGE_NAME):$(IMAGE_TAG)
+		-it $(TEST_NAME):$(TEST_TAG)
 
 # Copies binary and appimage from container to host.
-bin-module:
+bin-mod:
 	rm -rf $(BIN_DIR) | true && \
 	mkdir -p $(BIN_DIR) && \
 	docker stop viam-csi-bin | true && \
 	docker rm viam-csi-bin | true && \
-	docker run -d -it --name viam-csi-bin $(IMAGE_NAME):$(IMAGE_TAG) && \
-	docker cp viam-csi-bin:/root/opt/src/viam-csi/etc/viam-csi-$(IMAGE_TAG)-aarch64.AppImage $(BIN_DIR) && \
-	docker cp viam-csi-bin:/root/opt/src/viam-csi/build/viam-csi $(BIN_DIR) && \
+	docker run -d -it --name viam-csi-bin $(MOD_NAME):$(MOD_TAG) && \
+	docker cp viam-csi-bin:/root/opt/src/csi-camera/build/viam-csi ./$(BIN_DIR) && \
+	docker cp viam-csi-bin:/root/opt/src/csi-camera/etc/viam-csi-$(PACK_TAG)-aarch64.AppImage ./$(BIN_DIR) && \
 	docker stop viam-csi-bin
 
+# viam-csi-0.0.1-aarch64.AppImage
 # SDK
 .PHONY: build-sdk
 build-sdk:
@@ -78,13 +96,13 @@ docker-tests:
 		viam-csi-tests \
 		/bin/bash
 
-docker-ci:
-	docker buildx build \
-		-f etc/Dockerfile.jetson \
-		--platform linux/arm64 \
-		-t viam-csi-ci:latest \
-		--build-arg TAG=35.3.1 \
-		./
+# docker-ci:
+# 	docker buildx build \
+# 		-f etc/Dockerfile.jetson \
+# 		--platform linux/arm64 \
+# 		-t viam-csi-ci:latest \
+# 		--build-arg TAG=35.3.1 \
+# 		./
 
 # Utils
 # Installs waveshare camera overrides on Jetson.

@@ -1,5 +1,5 @@
-ARG TAG
-FROM nvcr.io/nvidia/l4t-base:${TAG}
+ARG L4T_TAG
+FROM nvcr.io/nvidia/l4t-base:${L4T_TAG}
 
 RUN apt-get -y update
 
@@ -70,8 +70,10 @@ RUN cd ${HOME}/opt/src && \
     mkdir build && \
     cd build && \
     cmake  -DVIAMCPPSDK_USE_DYNAMIC_PROTOS=ON -DVIAMCPPSDK_OFFLINE_PROTO_GENERATION=ON .. -G Ninja  && \
-    ninja install -j1
+    ninja install -j 1
 
+# install viam-csi
+RUN cp -r ${HOME}/opt/src/viam-cpp-sdk/build/install/* /usr/local/
 
 # install appimage-builder
 RUN apt install -y \
@@ -94,25 +96,3 @@ RUN cd ${HOME}/opt/src && \
     git clone https://github.com/AppImageCrafters/appimage-builder.git && \
     cd appimage-builder && \
     pip3 install ./
-
-# install viam-csi
-RUN cp -r ${HOME}/opt/src/viam-cpp-sdk/build/install/* /usr/local/
-
-# install GST dev files
-RUN apt-get install -y gstreamer1.0-tools gstreamer1.0-alsa \
-     gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
-     gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
-     gstreamer1.0-libav
-RUN apt-get install -y libgstreamer1.0-dev \
-     libgstreamer-plugins-base1.0-dev \
-     libgstreamer-plugins-good1.0-dev \
-     libgstreamer-plugins-bad1.0-dev
-
-# install gtest
-RUN apt-get -y install libgtest-dev
-
-ADD ../ /root/opt/src/viam-csi
-RUN cd /root/opt/src && \
-    cd viam-csi  && \
-    make build && \
-    make package
