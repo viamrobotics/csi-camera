@@ -15,7 +15,6 @@ CSICamera::CSICamera(const std::string name, const AttributeMap attrs) : Camera(
     init(attrs);
 }
 
-
 CSICamera::~CSICamera() {
     std::cout << "Destroying CSICamera" << std::endl;
     stop_pipeline();
@@ -28,8 +27,6 @@ void CSICamera::init(const AttributeMap attrs) {
         std::cout << "pipeline_args: " << pipeline_args << std::endl;
     }
     init_csi(pipeline_args);
-
-    return;
 }
 
 void CSICamera::validate_attrs(const AttributeMap attrs) {
@@ -38,8 +35,6 @@ void CSICamera::validate_attrs(const AttributeMap attrs) {
     set_attr<int>(attrs, "frame_rate", &CSICamera::frame_rate, DEFAULT_INPUT_FRAMERATE);
     set_attr<std::string>(attrs, "video_path", &CSICamera::video_path, DEFAULT_INPUT_SENSOR);
     set_attr<bool>(attrs, "debug", &CSICamera::debug, false);
-
-    return;
 }
 
 template <typename T>
@@ -58,8 +53,6 @@ void CSICamera::set_attr(const AttributeMap& attrs, const std::string& name, T C
     } else {
         this->*member = de; // Set the default value if the attribute is not found
     }
-
-    return;
 }
 
 void CSICamera::reconfigure(const Dependencies deps, const ResourceConfig cfg) {
@@ -69,8 +62,6 @@ void CSICamera::reconfigure(const Dependencies deps, const ResourceConfig cfg) {
     stop_pipeline();
     auto attrs = cfg.attributes();
     init(attrs);
-
-    return;
 }
 
 Camera::raw_image CSICamera::get_image(const std::string mime_type) {
@@ -154,8 +145,6 @@ void CSICamera::init_csi(const std::string pipeline_args) {
         gst_object_unref(pipeline);
         std::exit(EXIT_FAILURE);
     }
-
-    return;
 }
 
 // Handles async GST state change
@@ -194,8 +183,6 @@ void CSICamera::wait_pipeline() {
         std::cerr << "GST pipeline failed to change state" << std::endl;
         std::exit(EXIT_FAILURE);
     }
-
-    return;
 }
 
 void CSICamera::stop_pipeline() {
@@ -221,8 +208,6 @@ void CSICamera::stop_pipeline() {
     appsink = nullptr;
     pipeline = nullptr;
     bus = nullptr;
-
-    return;
 }
 
 void CSICamera::catch_pipeline() {
