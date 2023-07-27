@@ -82,6 +82,11 @@ Camera::raw_image CSICamera::get_image(const std::string mime_type) {
     return image;
 }
 
+Camera::image_collection CSICamera::get_images() {
+    std::cerr << "get_images not implemented" << std::endl;
+    return image_collection{};
+}
+
 AttributeMap CSICamera::do_command(const AttributeMap command) {
     std::cerr << "do_command not implemented" << std::endl;
     return 0;
@@ -161,9 +166,7 @@ void CSICamera::wait_pipeline() {
         auto current_time = std::chrono::high_resolution_clock::now();
         auto elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(current_time - start_time).count();
 
-        // If state change takes longer than timeout, exit
         if (elapsed_time >= timeout_microseconds) {
-            // Timeout occurred
             std::cerr << "Timeout: GST pipeline state change did not complete within timeout limit" << std::endl;
             std::exit(EXIT_FAILURE);
         }

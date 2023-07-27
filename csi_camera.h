@@ -43,6 +43,7 @@ public:
     // overrides camera component interface
     void reconfigure(const Dependencies deps, const ResourceConfig cfg) override;
     raw_image get_image(const std::string mime_type) override;
+    image_collection get_images() override;
     AttributeMap do_command(const AttributeMap command) override;
     point_cloud get_point_cloud(const std::string mime_type) override;
     std::vector<GeometryConfig> get_geometries() override;
