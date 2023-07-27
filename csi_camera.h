@@ -36,6 +36,8 @@ public:
     void init(const AttributeMap attrs);
     void init_csi(const std::string pipeline_args);
     void validate_attrs(const AttributeMap attrs);
+    template <typename T>
+    void set_attr(const AttributeMap& attrs, const std::string& name, T CSICamera::* member, T de);
 
     // Camera
     // overrides camera component interface

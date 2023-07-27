@@ -33,65 +33,30 @@ void CSICamera::init(const AttributeMap attrs) {
 }
 
 void CSICamera::validate_attrs(const AttributeMap attrs) {
-    if (attrs->count("width_px") == 1) {
-        std::shared_ptr<ProtoType> width_proto = attrs->at("width_px");
-        auto width_value = width_proto->proto_value();
-        if (width_value.has_number_value()) {
-            int width_num = static_cast<int>(width_value.number_value());
-            width_px = width_num;
-        }
-    }
-    if (!width_px) {
-        std::cout << "Setting width_px to default value: " << DEFAULT_INPUT_WIDTH << std::endl;
-        width_px = DEFAULT_INPUT_WIDTH;
-    }
+    set_attr<int>(attrs, "width_px", &CSICamera::width_px, DEFAULT_INPUT_WIDTH);
+    set_attr<int>(attrs, "height_px", &CSICamera::height_px, DEFAULT_INPUT_HEIGHT);
+    set_attr<int>(attrs, "frame_rate", &CSICamera::frame_rate, DEFAULT_INPUT_FRAMERATE);
+    set_attr<std::string>(attrs, "video_path", &CSICamera::video_path, DEFAULT_INPUT_SENSOR);
+    set_attr<bool>(attrs, "debug", &CSICamera::debug, false);
 
-    if (attrs->count("height_px") == 1) {
-        std::shared_ptr<ProtoType> height_proto = attrs->at("height_px");
-        auto height_value = height_proto->proto_value();
-        if (height_value.has_number_value()) {
-            int height_num = static_cast<int>(height_value.number_value());
-            height_px = height_num;
-        }
-    }
-    if (!height_px) {
-        std::cout << "Setting height_px to default value: " << DEFAULT_INPUT_HEIGHT << std::endl;
-        height_px = DEFAULT_INPUT_HEIGHT;
-    }
-    
-    if (attrs->count("frame_rate") == 1) {
-        std::shared_ptr<ProtoType> frame_proto = attrs->at("frame_rate");
-        auto frame_value = frame_proto->proto_value();
-        if (frame_value.has_number_value()) {
-            int frame_num = static_cast<int>(frame_value.number_value());
-            frame_rate = frame_num;
-        }
-    }
-    if (!frame_rate) {
-        std::cout << "Setting frame_rate to default value: " << DEFAULT_INPUT_FRAMERATE << std::endl;
-        frame_rate = DEFAULT_INPUT_FRAMERATE;
-    }
-    
-    if (attrs->count("video_path") == 1) {
-        std::shared_ptr<ProtoType> video_proto = attrs->at("video_path");
-        auto video_value = video_proto->proto_value();
-        if (video_value.has_string_value()) {
-            std::string video_str = video_value.string_value();
-            video_path = video_str;
-        }
-    }
-    if (video_path.empty() ) {
-        std::cout << "Setting video_path to default value: " << DEFAULT_INPUT_SENSOR << std::endl;
-        video_path = DEFAULT_INPUT_SENSOR;
-    }
+    return;
+}
 
-    if (attrs->count("debug") == 1) {
-        std::shared_ptr<ProtoType> debug_proto = attrs->at("debug");
-        auto debug_value = debug_proto->proto_value();
-        if (debug_value.has_bool_value()) {
-            bool debug_bool = static_cast<bool>(debug_value.bool_value());
-            debug = debug_bool;
+template <typename T>
+void CSICamera::set_attr(const AttributeMap& attrs, const std::string& name, T CSICamera::* member, T de) {
+    if (attrs->count(name) == 1) {
+        std::shared_ptr<ProtoType> proto = attrs->at(name);
+        auto val = proto->proto_value();
+
+        if constexpr (std::is_same<T, int>::value) {
+            this->*member = val.has_number_value() ? val.number_value() : de;
+        } else if constexpr (std::is_same<T, std::string>::value) {
+            this->*member = val.has_string_value() ? val.string_value() : de;
+        } else if constexpr (std::is_same<T, bool>::value) {
+            this->*member = val.has_bool_value() ? val.bool_value() : de;
         }
+    } else {
+        this->*member = de; // Set the default value if the attribute is not found
     }
 
     return;
