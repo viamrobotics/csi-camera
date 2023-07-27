@@ -27,8 +27,7 @@ int serve(const std::string& socket_path) {
         Model{API_NAMESPACE, API_TYPE, API_SUBTYPE},
         [](Dependencies, ResourceConfig resource_config) -> std::shared_ptr<Resource> {
             return std::make_shared<CSICamera>(resource_config.name(), resource_config.attributes());
-        },
-        [](ResourceConfig resource_config) -> std::vector<std::string> { return {}; });
+        });
 
     try {
         Registry::register_model(module_registration);

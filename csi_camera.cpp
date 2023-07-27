@@ -279,7 +279,6 @@ std::vector<unsigned char> CSICamera::get_csi_image() {
     return vec;
 }
 
-
 std::string CSICamera::create_pipeline() const {
     std::ostringstream oss;
 
@@ -298,7 +297,6 @@ std::string CSICamera::create_pipeline() const {
 
     return oss.str();
 }
-
 
 std::vector<unsigned char> CSICamera::buff_to_vec(GstBuffer *buff) {
     // Get the size of the buffer
