@@ -5,7 +5,7 @@ project(viam-csi
         DESCRIPTION "viam module for csi cameras"
 )
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(GNU_LIB_PATH /usr/lib/aarch64-linux-gnu)
 set(GNU_INCLUDE_PATH /usr/include/aarch64-linux-gnu)
