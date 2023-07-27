@@ -8,8 +8,8 @@
 #define API_SUBTYPE "csi"
 
 // GST
-#define GST_GET_STATE_TIMEOUT 1 // seconds
-#define GST_CHANGE_STATE_TIMEOUT 5 // seconds
+#define GST_GET_STATE_TIMEOUT 1 
+#define GST_CHANGE_STATE_TIMEOUT 5
 
 // Camera
 #define FAKE_CAMERA false
