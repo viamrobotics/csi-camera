@@ -9,7 +9,7 @@ BASE_TAG := 0.0.1
 MOD_NAME := viam-csi-module
 MOD_TAG := 0.0.1
 TEST_NAME := viam-csi-tests
-TESET_TAG := 0.0.1
+TEST_TAG := 0.0.1
 L4T_TAG := 35.3.1
 
 # Package
@@ -45,15 +45,12 @@ image-mod:
 		--build-arg BASE_NAME=$(BASE_NAME) \
 		-f ./etc/Dockerfile.mod.jetson ./
 
-# Builds raw L4T docker image viam-csi appimage.
+# Builds raw L4T docker image with viam-csi appimage.
 image-test:
 	docker build -t $(TEST_NAME):$(TEST_TAG) \
 		--build-arg L4T_TAG=$(L4T_TAG) \
-		-f ./etc/Dockerfile.mod.jetson ./ \
-	docker run \
-		--device /dev/fuse \
-		--cap-add SYS_ADMIN \
-		-it $(TEST_NAME):$(TEST_TAG)
+		--build-arg PACK_TAG=$(PACK_TAG) \
+		-f ./etc/Dockerfile.test.jetson ./ 
 
 # Copies binary and appimage from container to host.
 bin-mod:
@@ -85,16 +82,10 @@ docker-sdk:
 # Tests
 # Tests out package in a fresh container.
 docker-tests:
-	docker build \
-		-t viam-csi-tests:$(IMAGE_TAG) \
-		--build-arg TAG=$(L4T_VERSION) \
-		-f ./etc/Dockerfile.test.jetson ./ && \
-	docker run  \
+	docker run \
 		--device /dev/fuse \
 		--cap-add SYS_ADMIN \
-		-it \
-		viam-csi-tests \
-		/bin/bash
+		$(TEST_NAME):$(TEST_TAG)
 
 # docker-ci:
 # 	docker buildx build \
