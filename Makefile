@@ -11,6 +11,7 @@ MOD_TAG := 0.0.1
 TEST_NAME := viam-csi-tests
 TEST_TAG := 0.0.1
 L4T_TAG := 35.3.1
+HUB_USER := seanpollock
 
 # Package
 PACK_NAME := viam-csi-camera
@@ -130,4 +131,10 @@ restart-argus:
 # ADMIN
 # pushes appimage to storage bucket.
 push-package:
-	gsutil cp $(BIN_DIR)/viam-csi-$(PACK_TAG)-aarch64.AppImage gs://viam-csi
+	gsutil cp $(BIN_DIR)/viam-csi-$(PACK_TAG)-aarch64.AppImage gs://packages.viam.com/apps/csi-camera/
+
+# pushes base docker image to dockerhub.
+push-base:
+	docker tag $(BASE_NAME):$(BASE_TAG) $(HUB_USER)/$(BASE_NAME):$(BASE_TAG) && \
+	docker login && \
+	docker push $(HUB_USER)/$(BASE_NAME):$(BASE_TAG)
