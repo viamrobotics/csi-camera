@@ -5,7 +5,7 @@ on:
     branches: [ main, dev, RSDK-2895 ]
     paths-ignore:
       - 'README.md'
-
+jobs:
   appimage:
     name: AppImage Build
     strategy:
