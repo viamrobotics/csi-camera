@@ -13,8 +13,8 @@ TEST_TAG := 0.0.1
 L4T_TAG := 35.3.1
 
 # Package
+PACK_NAME := viam-csi-camera
 PACK_TAG := 0.0.1
-APP_DIR := './build/AppDir'
 
 # Module
 # Builds/installs module.
@@ -30,6 +30,14 @@ build:
 package:
 	cd etc && \
 	appimage-builder --recipe viam-csi-jetson-arm64.yml
+
+# Removes all build and bin artifacts.
+clean:
+	rm -rf $(BUILD_DIR) | true && \
+	rm -rf $(BIN_DIR) | true && \
+	rm -rf $(INSTALL_DIR) | true \
+	rm -rf ./etc/appimage-build | true && \
+	rm -f ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage*
 
 # Builds docker image with viam-cpp-sdk and helpers.
 image-base:
@@ -63,7 +71,6 @@ bin-mod:
 	docker cp viam-csi-bin:/root/opt/src/csi-camera/etc/viam-csi-$(PACK_TAG)-aarch64.AppImage ./$(BIN_DIR) && \
 	docker stop viam-csi-bin
 
-# viam-csi-0.0.1-aarch64.AppImage
 # SDK
 .PHONY: build-sdk
 build-sdk:
