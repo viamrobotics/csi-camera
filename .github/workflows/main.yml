@@ -5,6 +5,7 @@ on:
     branches: [ main, dev, RSDK-2895 ]
     paths-ignore:
       - 'README.md'
+
 jobs:
   appimage:
     name: AppImage Build
@@ -15,6 +16,14 @@ jobs:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
             image: ghcr.io/viamrobotics/canon:arm64-cache
             platform: linux/arm64
+      runs-on: ${{ matrix.arch }}
+      container:
+        image: ${{ matrix.image }}
+        options: --platform ${{ matrix.platform }}
+      timeout-minutes: 5
+      outputs:
+        date: ${{ steps.build_date.outputs.date }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
