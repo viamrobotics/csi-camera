@@ -30,3 +30,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+      - name: Clean build artifacts
+        run: make clean
+      - name: Build cmake and appimage
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: etc/Dockerfile.mod.jetson
+          tags: viam-csi-mod:0.0.1
+          build-args: |
+            HUB_USER=seanpollock
+            BASE_TAG=0.0.1
+            BASE_NAME=viam-cpp-jetson
+        
