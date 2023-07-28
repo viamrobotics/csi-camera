@@ -81,19 +81,20 @@ docker-sdk:
 
 # Tests
 # Tests out package in a fresh container.
-docker-tests:
+test-package:
 	docker run \
 		--device /dev/fuse \
 		--cap-add SYS_ADMIN \
 		$(TEST_NAME):$(TEST_TAG)
 
-# docker-ci:
-# 	docker buildx build \
-# 		-f etc/Dockerfile.jetson \
-# 		--platform linux/arm64 \
-# 		-t viam-csi-ci:latest \
-# 		--build-arg TAG=35.3.1 \
-# 		./
+test-ci:
+	docker buildx build \
+		-f etc/Dockerfile.mod.jetson \
+		--platform linux/arm64 \
+		-t $(MOD_NAME)-ci:$(MOD_TAG) \
+		--build-arg BASE_TAG=$(BASE_TAG) \
+		--build-arg BASE_NAME=$(BASE_NAME) \
+		./
 
 # Utils
 # Installs waveshare camera overrides on Jetson.
@@ -118,3 +119,8 @@ restart-argus:
 	sudo systemctl stop nvargus-daemon && \
 	sudo systemctl start nvargus-daemon && \
 	sudo systemctl status nvargus-daemon
+
+# ADMIN
+# pushes appimage to storage bucket.
+push-package:
+	gsutil cp $(BIN_DIR)/viam-csi-$(PACK_TAG)-aarch64.AppImage gs://viam-csi

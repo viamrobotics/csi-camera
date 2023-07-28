@@ -1,6 +1,6 @@
-ARG TAG
-ARG APPIMAGE
-FROM nvcr.io/nvidia/l4t-base:${TAG}
+ARG L4T_TAG
+ARG PACK_TAG
+FROM nvcr.io/nvidia/l4t-base:${L4T_TAG}
 
 ENV HOME /root
 
@@ -9,3 +9,6 @@ RUN apt install -y libfuse-dev
 
 # Copy appimage and binary
 ADD ../bin /usr/bin
+
+# TODO: automatically fill file name with ARG
+CMD ["/usr/bin/viam-csi-0.0.1-aarch64.AppImage"]
