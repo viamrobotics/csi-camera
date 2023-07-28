@@ -6,15 +6,15 @@ on:
     paths-ignore:
       - 'README.md'
 
-jobs:
-  build:
-    runs-on: ${{ matrix.platform }}
+  appimage:
+    name: AppImage Build
     strategy:
+      fail-fast: false
       matrix:
-           include:
+        include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
             image: ghcr.io/viamrobotics/canon:arm64-cache
-            platform: linux/arm64 
+            platform: linux/arm64
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
