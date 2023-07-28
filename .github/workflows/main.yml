@@ -11,8 +11,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
-        platform: [ubuntu-latest, arm64]
-    
+           include:
+          - arch: [buildjet-2vcpu-ubuntu-2204-arm]
+            image: ghcr.io/viamrobotics/canon:arm64-cache
+            platform: linux/arm64 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
