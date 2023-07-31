@@ -13,9 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - arch: [ubuntu-latest]
-            image: ghcr.io/viamrobotics/canon:amd64-cache
-            platform: linux/amd64
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
             image: ghcr.io/viamrobotics/canon:arm64-cache
             platform: linux/arm64
@@ -39,7 +36,7 @@ jobs:
           file: etc/Dockerfile.mod.jetson
           tags: viam-csi-mod:0.0.1
           build-args: |
-            HUB_USER=seanpollock
+            HUB_USER=seanavery
             BASE_TAG=0.0.1
             BASE_NAME=viam-cpp-jetson
         
