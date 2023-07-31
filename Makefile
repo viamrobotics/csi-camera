@@ -11,7 +11,7 @@ MOD_TAG := 0.0.1
 TEST_NAME := viam-csi-tests
 TEST_TAG := 0.0.1
 L4T_TAG := 35.3.1
-HUB_USER := seanpollock
+HUB_USER := seanavery
 
 # Package
 PACK_NAME := viam-csi-camera
@@ -51,6 +51,7 @@ image-base:
 image-mod:
 	docker build -t $(MOD_NAME):$(MOD_TAG) \
 		--build-arg BASE_TAG=$(BASE_TAG) \
+		--build-arg HUB_USER=$(HUB_USER) \
 		--build-arg BASE_NAME=$(BASE_NAME) \
 		-f ./etc/Dockerfile.mod.jetson ./
 
@@ -135,6 +136,5 @@ push-package:
 
 # pushes base docker image to dockerhub.
 push-base:
-	docker tag $(BASE_NAME):$(BASE_TAG) $(HUB_USER)/$(BASE_NAME):$(BASE_TAG) && \
-	docker login && \
-	docker push $(HUB_USER)/$(BASE_NAME):$(BASE_TAG)
+	docker tag $(BASE_NAME):$(BASE_TAG) ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG) && \
+	docker push ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG)
