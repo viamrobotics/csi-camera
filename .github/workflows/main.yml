@@ -2,7 +2,7 @@ name: Build Latest
 
 on:
   push:
-    branches: [ main, dev, RSDK-2895 ]
+    branches: [main, dev, RSDK-2895]
     paths-ignore:
       - 'README.md'
 
@@ -31,6 +31,5 @@ jobs:
         run: make clean
       - name: Build binary with cmake 
         run: make build
-     - name: Build appimage with appimage-builder
+      - name: Build appimage with appimage-builder
         run: make package
-        
