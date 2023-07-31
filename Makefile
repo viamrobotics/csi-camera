@@ -129,12 +129,13 @@ restart-argus:
 	sudo systemctl start nvargus-daemon && \
 	sudo systemctl status nvargus-daemon
 
-# ADMIN
+# Admin
 # pushes appimage to storage bucket.
 push-package:
 	gsutil cp $(BIN_DIR)/viam-csi-$(PACK_TAG)-aarch64.AppImage gs://packages.viam.com/apps/csi-camera/
 
-# pushes base docker image to dockerhub.
+# Pushes base docker image to github packages.
+# Requires docker login to ghcr.io
 push-base:
 	docker tag $(BASE_NAME):$(BASE_TAG) ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG) && \
 	docker push ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG)
