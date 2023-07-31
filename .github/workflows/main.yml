@@ -2,7 +2,7 @@ name: Build Latest
 
 on:
   push:
-    branches: [main, dev, RSDK-2895]
+    branches: [ main, RSDK-2895 ]
     paths-ignore:
       - 'README.md'
 
@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
+            image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1 
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:
@@ -29,7 +29,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Clean build artifacts
         run: make clean
-      - name: Build binary with cmake 
-        run: make build
-      - name: Build appimage with appimage-builder
-        run: make package
+      - name: Build cmake and appimage
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: etc/Dockerfile.mod.jetson
+          tags: viam-csi-mod:0.0.1
+          build-args: |
+            HUB_USER=seanavery
+            BASE_TAG=0.0.1
+            BASE_NAME=viam-cpp-jetson
