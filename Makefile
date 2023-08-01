@@ -30,7 +30,10 @@ build:
 # Creates appimage cmake build.
 package:
 	cd etc && \
-	appimage-builder --recipe viam-csi-jetson-arm64.yml
+	PACK_NAME=$(PACK_NAME) \
+	PACK_TAG=$(PACK_TAG) \
+	appimage-builder \
+		--recipe viam-csi-jetson-arm64.yml
 
 # Removes all build and bin artifacts.
 clean:
