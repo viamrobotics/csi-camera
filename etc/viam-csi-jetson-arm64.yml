@@ -12,9 +12,9 @@ AppDir:
   path: ./AppDir
   app_info:
     id: com.viam.csi-module
-    name: viam-csi
+    name: ${PACK_NAME}
     icon: viam-server
-    version: 0.0.1
+    version: ${PACK_TAG}
     exec: usr/bin/viam-csi
     exec_args: $@
   files:
