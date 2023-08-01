@@ -14,8 +14,8 @@ L4T_TAG := 35.3.1
 HUB_USER := seanavery
 
 # Package
-PACK_NAME := viam-csi-camera
-PACK_TAG := 0.0.1
+PACK_NAME := viam-csi
+PACK_TAG := latest
 
 # Module
 # Builds/installs module.

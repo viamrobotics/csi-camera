@@ -23,19 +23,15 @@ jobs:
     timeout-minutes: 15
     outputs:
       date: ${{ steps.build_date.outputs.date }}
-
+# Trying to use docker here for congruence
+# with local dev env. 
     steps:
       - name: Check out code
         uses: actions/checkout@v3
       - name: Clean build artifacts
         run: make clean
-      - name: Build cmake and appimage
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: etc/Dockerfile.mod.jetson
-          tags: viam-csi-mod:0.0.1
-          build-args: |
-            HUB_USER=seanavery
-            BASE_TAG=0.0.1
-            BASE_NAME=viam-cpp-jetson
+      - name: Build viam-csi binary and appimage
+        run: make image-mod
+      - name: Copy binary and appimage from container
+        run: make bin-mod
+# TODO: push appimage to cloud storage
