@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       date: ${{ steps.build_date.outputs.date }}
-# Trying to use docker here for congruence
+# Using docker here for congruence
 # with local dev env. 
     steps:
       - name: Check out code
@@ -34,4 +34,9 @@ jobs:
         run: make image-mod
       - name: Copy binary and appimage from container
         run: make bin-mod
+      - name: Run appimage in fresh L4T instance
+        run: |
+          make image-test
+          make test-package
+      
 # TODO: push appimage to cloud storage

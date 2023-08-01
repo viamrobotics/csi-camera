@@ -42,7 +42,8 @@ clean:
 	rm -rf $(INSTALL_DIR) | true \
 	rm -rf ./etc/appimage-build | true && \
 	rm -f ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage*
-
+	
+# Docker
 # Builds docker image with viam-cpp-sdk and helpers.
 image-base:
 	docker build -t $(BASE_NAME):$(BASE_TAG) \
@@ -95,6 +96,7 @@ docker-sdk:
 # Tests out package in a fresh container.
 test-package:
 	docker run \
+		-e PACK_FILE=$(PACK_NAME)-$(PACK_TAG)-aarch64.AppImage \
 		--device /dev/fuse \
 		--cap-add SYS_ADMIN \
 		$(TEST_NAME):$(TEST_TAG)
