@@ -7,3 +7,4 @@ etc/appimage-build
 *.tar*
 *.swp
 **/.DS_Store
+gha-creds-*.json

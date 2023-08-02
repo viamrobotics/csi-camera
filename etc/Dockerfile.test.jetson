@@ -10,11 +10,13 @@ RUN apt install -y libfuse-dev
 # Copy appimage and binary
 ADD ../bin /usr/bin
 
-# Run the appimage for 10 seconds and check that it exits with timeout
+# Run the appimage for 10 seconds 
+# and check that it exits with timeout
 CMD ["/bin/sh", "-c", "timeout 10 $PACK_FILE; \
                        status=$?; \
                        if [ $status -eq 124 ]; then \
                          echo 'Command timed out'; \
+                         exit 0; \
                        else \
                          exit $status; \
                        fi"]

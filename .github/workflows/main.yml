@@ -24,19 +24,39 @@ jobs:
     outputs:
       date: ${{ steps.build_date.outputs.date }}
 # Using docker here for congruence
-# with local dev env. 
+# with local dev env.
+# TODO: move to viam-cpp-jetson base and use bash instead of docker
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
       - name: Clean build artifacts
         run: make clean
+
       - name: Build viam-csi binary and appimage
         run: make image-mod
+
       - name: Copy binary and appimage from container
         run: make bin-mod
+
       - name: Run appimage in fresh L4T instance
         run: |
           make image-test
           make test-package
       
-# TODO: push appimage to cloud storage
+      - name: Authorize GCP upload
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Deploy Files
+        uses: google-github-actions/upload-cloud-storage@v0.10.4
+        with:
+          headers: "cache-control: no-cache"
+          path: 'bin'
+          destination: 'packages.viam.com/apps/csi-camera/'
+          glob: '*aarch64*'
+          parent: false
+          gzip: false
+      
+# TODO: Run cpp tests
