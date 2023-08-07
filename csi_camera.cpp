@@ -194,6 +194,12 @@ void CSICamera::stop_pipeline() {
         std::cout << "Stopping GST pipeline" << std::endl;
     }
 
+    // Check if pipeline is defined
+    if (pipeline == nullptr) {
+        std::cout << "Pipeline is not defined" << std::endl;
+        return;
+    }
+
     // Stop the pipeline
     if (gst_element_set_state(pipeline, GST_STATE_NULL) == GST_STATE_CHANGE_FAILURE) {
         std::cerr << "Failed to stop the pipeline" << std::endl;
@@ -319,7 +325,6 @@ std::vector<unsigned char> CSICamera::buff_to_vec(GstBuffer *buff) {
 }
 
 std::vector<unsigned char> CSICamera::get_test_image() {
-    // video_path + viam-log.jpeg
     std::string test_image_path = video_path + "/viam-logo.jpeg";
     
     // Create filestream
