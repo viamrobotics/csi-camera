@@ -2,7 +2,7 @@ name: Build Latest
 
 on:
   push:
-    branches: [ main, dev, RSDK-2895 ]
+    branches: [ main, RSDK-2895 ]
     paths-ignore:
       - 'README.md'
 
@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: ghcr.io/viamrobotics/canon:arm64-cache
+            image: arm64v8/ubuntu:22.04
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:
@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       date: ${{ steps.build_date.outputs.date }}
+
 # Using docker here for congruence
 # with local dev env.
 # TODO: move to viam-cpp-jetson base and use bash instead of docker
@@ -58,5 +59,4 @@ jobs:
           glob: '*aarch64*'
           parent: false
           gzip: false
-      
 # TODO: Run cpp tests
