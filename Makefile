@@ -49,6 +49,7 @@ bin:
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
 
 dep:
+	apt-get update && \
 	apt-get -y install libgtest-dev && \
 	apt-get install -y \
      gstreamer1.0-plugins-base
