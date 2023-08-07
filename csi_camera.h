@@ -16,6 +16,7 @@ class CSICamera : public Camera {
 private:
     // Camera
     bool debug;
+    bool fake;
     int width_px = 0;
     int height_px = 0;
     int frame_rate = 0;
