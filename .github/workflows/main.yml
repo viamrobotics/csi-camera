@@ -2,7 +2,7 @@ name: Build Latest
 
 on:
   push:
-    branches: [ main, RSDK-2895 ]
+    branches: [ main ]
     paths-ignore:
       - 'README.md'
 
@@ -24,9 +24,6 @@ jobs:
     outputs:
       date: ${{ steps.build_date.outputs.date }}
 
-# Using docker here for congruence
-# with local dev env.
-# TODO: move to viam-cpp-jetson base and use bash instead of docker
     steps:
       - name: Check out code
         uses: actions/checkout@v3
