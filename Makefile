@@ -45,6 +45,8 @@ clean:
 
 # Copies binary and appimage to bin folder
 bin:
+	rm -rf $(BIN_DIR) | true && \
+	mkdir -p $(BIN_DIR) && \
 	cp $(BUILD_DIR)/viam-csi $(BIN_DIR) && \
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
 
