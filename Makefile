@@ -49,7 +49,12 @@ bin:
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
 
 dep:
-	apt-get -y install libgtest-dev
+	apt-get -y install libgtest-dev && \
+	apt-get install -y libgstreamer1.0-dev \
+     libgstreamer-plugins-base1.0-dev \
+     libgstreamer-plugins-good1.0-dev \
+     libgstreamer-plugins-bad1.0-dev
+
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
