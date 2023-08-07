@@ -20,7 +20,7 @@ int serve(const std::string& socket_path) {
     sigaddset(&sigset, SIGTERM);
     pthread_sigmask(SIG_BLOCK, &sigset, NULL);
 
-    // Model regsitration
+    // Model registration
     auto module_registration = std::make_shared<ModelRegistration>(
         ResourceType{RESOURCE_TYPE},
         Camera::static_api(),
