@@ -18,7 +18,11 @@ int serve(const std::string& socket_path) {
     sigemptyset(&sigset);
     sigaddset(&sigset, SIGINT);
     sigaddset(&sigset, SIGTERM);
-    pthread_sigmask(SIG_BLOCK, &sigset, NULL);
+    auto s = pthread_sigmask(SIG_BLOCK, &sigset, NULL);
+    if (s != 0) {
+        std::cerr << "error setting signal mask" << std::endl;
+        return EXIT_FAILURE;
+    }
 
     // Model registration
     auto module_registration = std::make_shared<ModelRegistration>(
