@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: arm64v8/ubuntu:22.04
+            image: ghcr.io/viamrobotics/canon:arm64-cache
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:
