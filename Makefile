@@ -51,7 +51,7 @@ bin:
 dep:
 	apt-get -y install libgtest-dev && \
 	apt-get install -y \
-     gstreamer-plugins-base
+     gstreamer1.0-plugins-base
 
 	
 # Docker
