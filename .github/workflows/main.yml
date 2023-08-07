@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: ghcr.io/viamrobotics/canon:arm64-cache
+            image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:
@@ -34,11 +34,14 @@ jobs:
       - name: Clean build artifacts
         run: make clean
 
-      - name: Build viam-csi binary and appimage
-        run: make image-mod
+      - name: Build viam-csi binary
+        run: make build
 
-      - name: Copy binary and appimage from container
-        run: make bin-mod
+      - name: Build viam-csi appimage
+        run: make package
+
+      - name: Copy binary and appimage to bin folde 
+        run: make bin
 
       - name: Run appimage in fresh L4T instance
         run: |
