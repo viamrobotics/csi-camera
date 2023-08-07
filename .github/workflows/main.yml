@@ -34,6 +34,9 @@ jobs:
       - name: Clean build artifacts
         run: make clean
 
+      - name: Install module dependencies
+        run: make dep
+
       - name: Build viam-csi binary
         run: make build
 

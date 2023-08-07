@@ -47,6 +47,9 @@ clean:
 bin:
 	cp $(BUILD_DIR)/viam-csi $(BIN_DIR) && \
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
+
+dep:
+	apt-get -y install libgtest-dev
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
