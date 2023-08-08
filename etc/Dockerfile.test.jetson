@@ -1,0 +1,22 @@
+ARG L4T_TAG
+
+FROM nvcr.io/nvidia/l4t-base:${L4T_TAG}
+
+ENV HOME /root
+
+RUN apt-get -y update
+RUN apt install -y libfuse-dev
+
+# copy appimage and binary
+ADD ../bin /usr/bin
+
+# run the appimage for 10 seconds 
+# and check that it exits with timeout
+CMD ["/bin/sh", "-c", "timeout 10 $PACK_FILE; \
+                       status=$?; \
+                       if [ $status -eq 124 ]; then \
+                         echo 'Command timed out'; \
+                         exit 0; \
+                       else \
+                         exit $status; \
+                       fi"]
