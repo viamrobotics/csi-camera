@@ -12,7 +12,6 @@
 #define GST_CHANGE_STATE_TIMEOUT 5
 
 // Camera
-#define FAKE_CAMERA false
 #define DEFAULT_INPUT_SOURCE "nvarguscamerasrc"
 #define DEFAULT_INPUT_SENSOR "0"
 #define DEFAULT_INPUT_FORMAT "video/x-raw(memory:NVMM)"
