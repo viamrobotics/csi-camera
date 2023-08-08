@@ -3,9 +3,8 @@ FROM nvcr.io/nvidia/l4t-base:${L4T_TAG}
 
 RUN apt-get -y update
 
-# Install viam-cpp-sdk
+# install viam-cpp-sdk
 # reference: https://github.com/viamrobotics/viam-cpp-sdk
-# TODO: comply with license https://github.com/viamrobotics/viam-cpp-sdk/blob/main/LICENSE
 RUN apt-get -y --no-install-recommends install \
     build-essential \
     ca-certificates \
