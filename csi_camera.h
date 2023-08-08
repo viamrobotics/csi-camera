@@ -16,7 +16,6 @@ class CSICamera : public Camera {
 private:
     // Camera
     bool debug;
-    bool fake;
     int width_px = 0;
     int height_px = 0;
     int frame_rate = 0;
@@ -61,7 +60,6 @@ public:
     // helpers to pull and process images from appsink
     std::vector<unsigned char> get_csi_image();
     std::vector<unsigned char> buff_to_vec(GstBuffer *buff);
-    std::vector<unsigned char> get_test_image();
 
     // Getters
     std::string get_name() const;

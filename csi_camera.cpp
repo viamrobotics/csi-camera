@@ -34,7 +34,6 @@ void CSICamera::validate_attrs(const AttributeMap attrs) {
     set_attr<int>(attrs, "height_px", &CSICamera::height_px, DEFAULT_INPUT_HEIGHT);
     set_attr<int>(attrs, "frame_rate", &CSICamera::frame_rate, DEFAULT_INPUT_FRAMERATE);
     set_attr<std::string>(attrs, "video_path", &CSICamera::video_path, DEFAULT_INPUT_SENSOR);
-    set_attr<bool>(attrs, "fake", &CSICamera::fake, FAKE_CAMERA);
     set_attr<bool>(attrs, "debug", &CSICamera::debug, false);
 }
 
@@ -71,13 +70,9 @@ Camera::raw_image CSICamera::get_image(const std::string mime_type) {
     }
     raw_image image;
     image.mime_type = DEFAULT_OUTPUT_MIMETYPE;
-    if (fake) {
-        image.bytes = get_test_image();
-    } else {
-        image.bytes = get_csi_image();
-        if (image.bytes.empty()) {
-            std::cerr << "ERROR: no bytes retrieved" << std::endl;
-        }
+    image.bytes = get_csi_image();
+    if (image.bytes.empty()) {
+        std::cerr << "ERROR: no bytes retrieved" << std::endl;
     }
 
     return image;
@@ -323,23 +318,6 @@ std::vector<unsigned char> CSICamera::buff_to_vec(GstBuffer *buff) {
 
     return vec;
 }
-
-std::vector<unsigned char> CSICamera::get_test_image() {
-    std::string test_image_path = video_path + "/viam-logo.jpeg";
-    
-    // Create filestream
-    std::ifstream file(test_image_path, std::ios::binary);
-    if (!file) {
-        std::cout << "ERROR: could not open file" << std::endl;
-        return {};
-    }
-
-    // Read the file contents into a vector
-    std::vector<unsigned char> bytes(std::istreambuf_iterator<char>(file), {});
-
-    return bytes;
-}
-
 
 std::string CSICamera::get_video_path() const {
     return video_path;
