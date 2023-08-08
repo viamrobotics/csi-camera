@@ -42,6 +42,20 @@ clean:
 	rm -rf $(INSTALL_DIR) | true \
 	rm -rf ./etc/appimage-build | true && \
 	rm -f ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage*
+
+# Copies binary and appimage to bin folder
+bin:
+	rm -rf $(BIN_DIR) | true && \
+	mkdir -p $(BIN_DIR) && \
+	cp $(BUILD_DIR)/viam-csi $(BIN_DIR) && \
+	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
+
+dep:
+	apt-get update && \
+	apt-get -y install libgtest-dev && \
+	apt-get install -y gstreamer1.0-tools && \
+	apt-get install -y libgstreamer1.0-dev \
+    	libgstreamer-plugins-base1.0-dev
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.

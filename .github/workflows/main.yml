@@ -2,7 +2,7 @@ name: Build Latest
 
 on:
   push:
-    branches: [ main, dev, RSDK-2895 ]
+    branches: [ main ]
     paths-ignore:
       - 'README.md'
 
@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: ghcr.io/viamrobotics/canon:arm64-cache
+            image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:
@@ -23,9 +23,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       date: ${{ steps.build_date.outputs.date }}
-# Using docker here for congruence
-# with local dev env.
-# TODO: move to viam-cpp-jetson base and use bash instead of docker
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -33,11 +31,17 @@ jobs:
       - name: Clean build artifacts
         run: make clean
 
-      - name: Build viam-csi binary and appimage
-        run: make image-mod
+      - name: Install module dependencies
+        run: make dep
 
-      - name: Copy binary and appimage from container
-        run: make bin-mod
+      - name: Build viam-csi binary
+        run: make build
+
+      - name: Build viam-csi appimage
+        run: make package
+
+      - name: Copy binary and appimage to bin folder
+        run: make bin
 
       - name: Run appimage in fresh L4T instance
         run: |
@@ -58,5 +62,4 @@ jobs:
           glob: '*aarch64*'
           parent: false
           gzip: false
-      
 # TODO: Run cpp tests

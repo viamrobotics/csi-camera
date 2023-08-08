@@ -5,6 +5,7 @@ ARG HUB_USER
 FROM ghcr.io/${HUB_USER}/${BASE_NAME}:${BASE_TAG}
 
 # install GST dev files
+RUN apt-get update
 RUN apt-get install -y gstreamer1.0-tools gstreamer1.0-alsa \
      gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
      gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
