@@ -2,7 +2,8 @@ name: Build Latest
 
 on:
   push:
-    branches: [ main, RSDK-2895 ]
+    branches: 
+      - '*'
     paths-ignore:
       - 'README.md'
 
