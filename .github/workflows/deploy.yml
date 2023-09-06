@@ -1,0 +1,38 @@
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
+    container:
+      image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
+      options: --platform linux/arm64
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Clean build artifacts
+      run: make clean
+
+    - name: Install module dependencies
+      run: make dep
+
+    - name: Build viam-csi binary
+      run: make build
+
+    - name: Build viam-csi appimage
+      run: make package
+
+    - name: Copy binary and appimage to bin folder and archive
+      run: make bin && tar czf module.tar.gz ./bin/*.AppImage
+      
+    - uses: viamrobotics/upload-module@main
+      # if: github.event_name == 'release' # <-- once the action is working, uncomment this so you only upload on release
+      with:
+        module-path: module.tar.gz
+        platform: linux/arm64
+        version: ${{ github.ref_name }}
+        key-id: ${{ secrets.viam_key_id }}
+        key-value: ${{ secrets.viam_key_value }}
