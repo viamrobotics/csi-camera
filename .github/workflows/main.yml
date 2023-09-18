@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.arch }}
     container:
       image: ${{ matrix.image }}
-      options: ${{ matrix.platform }}
+      options: --platform ${{ matrix.platform }}
     timeout-minutes: 15
     outputs:
       date: ${{ steps.build_date.outputs.date }}
