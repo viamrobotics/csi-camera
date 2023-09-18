@@ -27,7 +27,12 @@ jobs:
 
     - name: Copy binary and appimage to bin folder and archive
       run: make bin && tar czf module.tar.gz ./bin/*.AppImage
-      
+
+    - name: Run appimage in fresh L4T instance
+      run: |
+       make image-test
+       make test-package
+
     - uses: viamrobotics/upload-module@main
       # if: github.event_name == 'release' # <-- once the action is working, uncomment this so you only upload on release
       with:
