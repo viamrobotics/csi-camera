@@ -1,7 +1,7 @@
 {
   "module_id": "viam:csi-cam",
   "visibility": "public",
-  "url": "https://app.viam.com/module/viam/csi-cam",
+  "url": "https://github.com/viamrobotics/csi-camera/",
   "description": "Module for CSI camera",
   "models": [
     {
