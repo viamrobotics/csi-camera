@@ -34,7 +34,6 @@ jobs:
        make test-package
 
     - uses: viamrobotics/upload-module@main
-      if: github.event_name == 'release'
       with:
         module-path: module.tar.gz
         platform: linux/arm64
