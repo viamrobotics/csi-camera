@@ -9,5 +9,5 @@
       "model": "viam:camera:csi"
     }
   ],
-  "entrypoint": "viam-csi-latest-aarch64.AppImage"
+  "entrypoint": "./bin/viam-csi-latest-aarch64.AppImage"
 }
