@@ -5,6 +5,10 @@
 
 ___
 
+### User documentation
+
+For user documentation, see [Add a CSI Camera as a Modular Resource](https://docs.viam.com/extend/modular-resources/examples/csi/).
+
 ### usage
 
 1. Download appimage from releases page.
