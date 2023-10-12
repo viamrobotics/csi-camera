@@ -7,10 +7,13 @@
 
 #include "constraints.h"
 #include "csi_camera.h"
+#include "utils.h"
 
 using namespace viam::sdk;
 
 CSICamera::CSICamera(const std::string name, const AttributeMap attrs) : Camera(std::move(name)) {
+    device_type device = get_device_type();
+    std::cout << "Device type: " << device.name << std::endl;
     std::cout << "Creating CSICamera with name: " << name << std::endl;
     init(attrs);
 }
