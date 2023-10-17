@@ -11,16 +11,25 @@
 #define GST_GET_STATE_TIMEOUT 1 
 #define GST_CHANGE_STATE_TIMEOUT 5
 
-// Camera
-#define DEFAULT_INPUT_SOURCE "nvarguscamerasrc"
+// Pipeline
+#define DEFAULT_INPUT_SOURCE "libcamerasrc"
 #define DEFAULT_INPUT_SENSOR "0"
-#define DEFAULT_INPUT_FORMAT "video/x-raw(memory:NVMM)"
+#define DEFAULT_INPUT_FORMAT "video/x-raw"
 #define DEFAULT_INPUT_WIDTH 1920
 #define DEFAULT_INPUT_HEIGHT 1080
 #define DEFAULT_INPUT_FRAMERATE 30
-#define DEFAULT_INPUT_FLIP_METHOD "0"
-#define DEFAULT_OUTPUT_FORMAT "video/x-raw"
-#define DEFAULT_OUTPUT_WIDTH 960
-#define DEFAULT_OUTPUT_HEIGHT 540
+#define DEFAULT_VIDEO_CONVERTER "videoconvert"
 #define DEFAULT_OUTPUT_ENCODER "nvjpegenc"
 #define DEFAULT_OUTPUT_MIMETYPE "image/jpeg"
+
+// Jetson
+#define JETSON_INPUT_SOURCE "nvarguscamerasrc"
+#define JETSON_INPUT_FORMAT "video/x-raw(memory:NVMM)"
+#define JETSON_VIDEO_CONVERTER "nvvidconv"
+#define JETSON_OUTPUT_ENCODER "nvjpegenc"
+
+// Pi
+#define PI_INPUT_SOURCE "libcamerasrc"
+#define PI_INPUT_FORMAT "video/x-raw"
+#define PI_VIDEO_CONVERTER "videoconvert"
+#define PI_OUTPUT_ENCODER "jpegenc"
