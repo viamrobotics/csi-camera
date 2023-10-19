@@ -17,7 +17,6 @@ using namespace viam::sdk;
 class CSICamera : public Camera {
 private:
     // Device
-    // device_type device = device_type(device_type::unknown, "unknown");
     device_type device;
 
     // Camera
