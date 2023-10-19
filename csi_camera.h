@@ -10,10 +10,15 @@
 #include <viam/sdk/components/camera/camera.hpp>
 #include <viam/api/component/camera/v1/camera.grpc.pb.h>
 
+#include "utils.h"
+
 using namespace viam::sdk;
 
 class CSICamera : public Camera {
 private:
+    // Device
+    device_type device;
+
     // Camera
     bool debug;
     int width_px = 0;

@@ -7,14 +7,13 @@
 
 #include "constraints.h"
 #include "csi_camera.h"
-#include "utils.h"
 
 using namespace viam::sdk;
 
 CSICamera::CSICamera(const std::string name, const AttributeMap attrs) : Camera(std::move(name)) {
-    device_type device = get_device_type();
-    std::cout << "Device type: " << device.name << std::endl;
+    device = get_device_type();
     std::cout << "Creating CSICamera with name: " << name << std::endl;
+    std::cout << "Device type: " << device.name << std::endl;
     init(attrs);
 }
 
@@ -288,19 +287,20 @@ std::vector<unsigned char> CSICamera::get_csi_image() {
 }
 
 std::string CSICamera::create_pipeline() const {
-    std::ostringstream oss;
+    auto device_params = get_device_params(device);
+    std::string input_sensor = (device.value == device_type::jetson) ? (" sensor-id="+video_path) : "";
 
-    oss << DEFAULT_INPUT_SOURCE << " sensor_id=" << video_path
-        << " ! " << DEFAULT_INPUT_FORMAT
+    std::ostringstream oss;
+    oss << device_params.input_source
+        << input_sensor
+        << " ! " << device_params.input_format
         << ",width=" << std::to_string(width_px)
         << ",height=" << std::to_string(height_px)
         << ",framerate=" << std::to_string(frame_rate)
-        << "/1 ! nvvidconv flip-method=" << DEFAULT_INPUT_FLIP_METHOD
-        << " ! " << DEFAULT_OUTPUT_FORMAT
-        << ",width=" << std::to_string(DEFAULT_OUTPUT_WIDTH)
-        << ",height=" << std::to_string(DEFAULT_OUTPUT_HEIGHT)
-        << " ! " << DEFAULT_OUTPUT_ENCODER
-        << " ! " << DEFAULT_OUTPUT_MIMETYPE
+        << "/1 ! " << device_params.video_converter
+        << " ! " << device_params.output_encoder
+        << " ! " << "image/jpeg"
+        << " ! queue"
         << " ! appsink name=appsink0 max-buffers=1";
 
     return oss.str();

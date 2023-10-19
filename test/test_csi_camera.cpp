@@ -3,6 +3,7 @@
 #include <viam/sdk/components/camera/camera.hpp>
 
 #include "../csi_camera.cpp"
+#include "../utils.cpp"
 #include "../constraints.h"
 
 using namespace viam::sdk;
