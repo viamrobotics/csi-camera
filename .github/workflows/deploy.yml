@@ -33,6 +33,11 @@ jobs:
        make image-test TARGET=jetson
        make test-package TARGET=jetson
 
+    - name: Run appimage in fresh debian instance
+      run: |
+        make image-test TARGET=pi
+        make test-package TARGET=pi
+
     - uses: viamrobotics/upload-module@main
       if: github.event_name == 'release'
       with:
