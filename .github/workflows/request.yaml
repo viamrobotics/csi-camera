@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  publish:
+  test-package:
     runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
     container:
       image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v3
-      
+
     - name: Clean build artifacts
       run: make clean
 
