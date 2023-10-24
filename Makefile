@@ -4,18 +4,26 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-BASE_NAME := viam-cpp-jetson
+DOCK_TAG := 0.0.1
 BASE_TAG := 0.0.1
-MOD_NAME := viam-csi-module
-MOD_TAG := 0.0.1
-TEST_NAME := viam-csi-tests
-TEST_TAG := 0.0.1
 L4T_TAG := 35.3.1
+BASE_NAME := viam-cpp-jetson
+MOD_NAME := viam-csi-module
+TEST_NAME := viam-csi-tests
 HUB_USER := seanavery
 
 # Package
 PACK_NAME := viam-csi
 PACK_TAG := latest
+
+# CLI
+TARGET ?= pi # [jetson,pi]
+TEST_BASE ?= debian:bookworm
+ifeq ($(TARGET), jetson)
+	TEST_BASE=nvcr.io/nvidia/l4t-base:$(L4T_TAG)
+else ifeq ($(TARGET), pi)
+	TEST_BASE=debian:bookworm
+endif
 
 # Module
 # Builds/installs module.
@@ -60,25 +68,26 @@ dep:
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
 image-base:
-	docker build -t $(BASE_NAME):$(BASE_TAG) \
+	docker build -t $(BASE_NAME):$(DOCK_TAG) \
 		--memory=16g \
 		--build-arg L4T_TAG=$(L4T_TAG) \
 		-f ./etc/Dockerfile.base.jetson ./
 
 # Builds docker image with viam-csi installed.
 image-mod:
-	docker build -t $(MOD_NAME):$(MOD_TAG) \
+	docker build -t $(MOD_NAME):$(DOCK_TAG) \
 		--build-arg BASE_TAG=$(BASE_TAG) \
 		--build-arg HUB_USER=$(HUB_USER) \
 		--build-arg BASE_NAME=$(BASE_NAME) \
-		-f ./etc/Dockerfile.mod.jetson ./
+		-f ./etc/Dockerfile.mod ./
 
 # Builds raw L4T docker image with viam-csi appimage.
 image-test:
-	docker build -t $(TEST_NAME):$(TEST_TAG) \
-		--build-arg L4T_TAG=$(L4T_TAG) \
+	docker build -t $(TEST_NAME)-$(TARGET):$(DOCK_TAG) \
+		--no-cache \
+		--build-arg TEST_BASE=$(TEST_BASE) \
 		--build-arg PACK_TAG=$(PACK_TAG) \
-		-f ./etc/Dockerfile.test.jetson ./ 
+		-f ./etc/Dockerfile.test ./
 
 # Copies binary and appimage from container to host.
 bin-mod:
@@ -86,7 +95,7 @@ bin-mod:
 	mkdir -p $(BIN_DIR) && \
 	docker stop viam-csi-bin | true && \
 	docker rm viam-csi-bin | true && \
-	docker run -d -it --name viam-csi-bin $(MOD_NAME):$(MOD_TAG) && \
+	docker run -d -it --name viam-csi-bin $(MOD_NAME):$(DOCK_TAG) && \
 	docker cp viam-csi-bin:/root/opt/src/csi-camera/build/viam-csi ./$(BIN_DIR) && \
 	docker cp viam-csi-bin:/root/opt/src/csi-camera/etc/viam-csi-$(PACK_TAG)-aarch64.AppImage ./$(BIN_DIR) && \
 	docker stop viam-csi-bin
@@ -113,16 +122,7 @@ test-package:
 		-e PACK_FILE=$(PACK_NAME)-$(PACK_TAG)-aarch64.AppImage \
 		--device /dev/fuse \
 		--cap-add SYS_ADMIN \
-		$(TEST_NAME):$(TEST_TAG)
-
-test-ci:
-	docker buildx build \
-		-f etc/Dockerfile.mod.jetson \
-		--platform linux/arm64 \
-		-t $(MOD_NAME)-ci:$(MOD_TAG) \
-		--build-arg BASE_TAG=$(BASE_TAG) \
-		--build-arg BASE_NAME=$(BASE_NAME) \
-		./
+		$(TEST_NAME)-$(TARGET):$(DOCK_TAG)
 
 # Utils
 # Installs waveshare camera overrides on Jetson.

@@ -46,9 +46,14 @@ jobs:
 
       - name: Run appimage in fresh L4T instance
         run: |
-          make image-test
-          make test-package
+          make image-test TARGET=jetson
+          make test-package TARGET=jetson
       
+      - name: Run appimage in fresh debian instance
+        run: |
+          make image-test TARGET=pi
+          make test-package TARGET=pi
+
       - name: Authorize GCP upload
         uses: google-github-actions/auth@v1
         with:

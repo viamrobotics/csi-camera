@@ -1,10 +1,12 @@
+name: Test pull request
+
 on:
-  push:
-    tags:
-      - 'v?[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '*'
 
 jobs:
-  publish:
+  test-package:
     runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
     container:
       image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
@@ -25,24 +27,15 @@ jobs:
     - name: Build viam-csi appimage
       run: make package
 
-    - name: Copy binary and appimage to bin folder and archive
-      run: make bin && tar czf module.tar.gz ./bin/*.AppImage
+    - name: Copy binary and appimage to bin folder
+      run: make bin
 
     - name: Run appimage in fresh L4T instance
       run: |
-       make image-test TARGET=jetson
-       make test-package TARGET=jetson
-
+        make image-test TARGET=jetson
+        make test-package TARGET=jetson
+    
     - name: Run appimage in fresh debian instance
       run: |
         make image-test TARGET=pi
         make test-package TARGET=pi
-
-    - uses: viamrobotics/upload-module@main
-      if: github.event_name == 'release'
-      with:
-        module-path: module.tar.gz
-        platform: linux/arm64
-        version: ${{ github.ref_name }}
-        key-id: ${{ secrets.viam_key_id }}
-        key-value: ${{ secrets.viam_key_value }}
