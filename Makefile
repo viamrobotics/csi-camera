@@ -4,13 +4,13 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-DOCK_TAG := 0.0.1
-BASE_TAG := 0.0.1
-L4T_TAG := 35.3.1
-BASE_NAME := viam-cpp-jetson
+BASE_NAME := viam-cpp-base
 MOD_NAME := viam-csi-module
 TEST_NAME := viam-csi-tests
 HUB_USER := seanavery
+DOCK_TAG := 0.0.1 # tag for mod/test images
+BASE_TAG := 0.0.2
+L4T_TAG := 35.3.1
 
 # Package
 PACK_NAME := viam-csi
