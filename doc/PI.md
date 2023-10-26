@@ -1,14 +1,17 @@
-# Jetson
+# Raspberry Pi
 
 ### Dependencies
 
-On Jetson devices, GStreamer comes packaged with Jetpack, so no additional installations are required.
+On a Raspberry Pi, you must install GStreamer plugins before running the module.
+
+```bash
+sudo apt install libgstreamer-plugins-base1.0-dev 
+```
 
 ### Camera Attributes
 
 | Key Name    | Value Type | Description                                  |
 |-------------|------------|----------------------------------------------|
-| video_path  | String     | Input sensor number (e.g., "0") or path to video file (e.g. /dev/video0). |
 | width_px    | Integer    | Width of the video in pixels (e.g., 1920).  |
 | height_px   | Integer    | Height of the video in pixels (e.g., 1080). |
 | frame_rate  | Integer    | Frames per second of the video (e.g., 30).  |
@@ -20,8 +23,8 @@ ___
 
 | Device | OS | Camera | Provider |
 |------------------|-----------------|-----------------|-----------------|
-| Jetson Orin-Nano | L4T 35.3.1 | IMX 219 | Waveshare |
-| Jetson Nano | L4T 32.7.1 | IMX 477 | Arducam |
+| Raspberry Pi 4B | Debian Bullseye | RPI GS Camera | Raspberry Pi |
+| Raspberry Pi 4B | Debian Bookworm | IMX 477 | Arducam |
 
 ____
 
@@ -29,4 +32,4 @@ ____
 
 | Tool | Description |
 |------------------|-----------------|
-| test_jetson_pipeline.sh | Test script to see if GST and camera sensor are working. |
+| test_pi_pipeline.sh | Test script to see if GST and camera sensor are working. |

@@ -5,37 +5,41 @@
 
 ___
 
-### User documentation
+### Getting Started
 
 For user documentation, see [Add a CSI Camera as a Modular Resource](https://docs.viam.com/extend/modular-resources/examples/csi/).
 
-### usage
+You can view more platform specific details at [JETSON.md](./doc/JETSON.md) and [PI.md](./doc/PI.md).
 
-1. Download appimage from releases page.
-```bash
-sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/viam-csi
-```
+_Note: On a Raspberry Pi, you must install GStreamer plugins before running the module._
 
 ```bash
-sudo chmod 755 /usr/local/bin/viam-csi
+sudo apt install libgstreamer-plugins-base1.0-dev 
 ```
-
-2. Run [viam-server](https://docs.viam.com/installation/) with example config file [etc/app-config.json](https://github.com/seanavery/viam-csi/blob/master/etc/app-config.json). View [JETSON.md](./doc/JETSON.md) for componenet attribute options.
-
-`viam-server` will automatically load the module. You can now head over to https://app.viam.com/ and view the control tab for the camera feed. If you do not see anything, check the logs tab for errors. 
 
 ___
 
-### develop
+### Latest
 
-View [DEVELOP.md](./doc/DEVELOP.md) for more information on how to build and run the module locally.
+To install the latest development version of the module, run the following commands:
+```bash
+sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
+```
 
-PRs and issues are welcome!
+```bash
+sudo chmod 755 /usr/local/bin/csi-cam
+```
 
 ___
 
-### support
+### Develop
+
+View [DEVELOP.md](./doc/DEVELOP.md) for more information on how to build and run the module locally or in Docker. Pull Requests and Issues are welcome!
+
+___
+
+### Support
 
 - [x] [Nvidia Jetson](./doc/JETSON.md)
-- [ ] Raspberry Pi
+- [x] [Raspberry Pi](./doc/PI.md)
 - [ ] Orange Pi
