@@ -46,11 +46,11 @@ void CSICamera::set_attr(const AttributeMap& attrs, const std::string& name, T C
         auto val = proto->proto_value();
 
         if constexpr (std::is_same<T, int>::value) {
-            this->*member = val.has_number_value() ? val.number_value() : de;
+            this->*member = val.number_value();
         } else if constexpr (std::is_same<T, std::string>::value) {
-            this->*member = val.has_string_value() ? val.string_value() : de;
+            this->*member = val.string_value();
         } else if constexpr (std::is_same<T, bool>::value) {
-            this->*member = val.has_bool_value() ? val.bool_value() : de;
+            this->*member = val.bool_value();
         }
     } else {
         this->*member = de; // Set the default value if the attribute is not found
@@ -66,7 +66,7 @@ void CSICamera::reconfigure(const Dependencies deps, const ResourceConfig cfg) {
     init(attrs);
 }
 
-Camera::raw_image CSICamera::get_image(const std::string mime_type) {
+Camera::raw_image CSICamera::get_image(const std::string mime_type, const AttributeMap& extra) {
     if (debug) {
         std::cout << "hit get_image. expecting mime_type " << mime_type << std::endl;
     }
@@ -90,12 +90,12 @@ AttributeMap CSICamera::do_command(const AttributeMap command) {
     return 0;
 }
 
-Camera::point_cloud CSICamera::get_point_cloud(const std::string mime_type) {
+Camera::point_cloud CSICamera::get_point_cloud(const std::string mime_type, const AttributeMap& extra) {
     std::cerr << "get_point_cloud not implemented" << std::endl;
     return point_cloud{};
 }
 
-std::vector<GeometryConfig> CSICamera::get_geometries() {
+std::vector<GeometryConfig> CSICamera::get_geometries(const AttributeMap& extra) {
     std::cerr << "get_geometries not implemented" << std::endl;
     return std::vector<GeometryConfig>{};
 }
