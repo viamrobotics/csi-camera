@@ -59,10 +59,12 @@ bin:
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
 
 dep:
-	DEBIAN_FRONTEND=noninteractive apt-get update && \
+	export DEBIAN_FRONTEND=noninteractive && \
+	export TZ=America/New_York && \
+	apt-get update && \
 	apt-get -y install libgtest-dev && \
-	apt-get install -y gstreamer1.0-tools && \
-	apt-get install -y libgstreamer1.0-dev \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y gstreamer1.0-tools && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y libgstreamer1.0-dev \
 		libgstreamer-plugins-base1.0-dev \
 		libgstreamer-plugins-good1.0-dev \
 		libgstreamer-plugins-bad1.0-dev
