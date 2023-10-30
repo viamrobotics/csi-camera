@@ -17,6 +17,8 @@ _Note: On a Raspberry Pi, you must install GStreamer plugins before running the 
 sudo apt install libgstreamer-plugins-base1.0-dev 
 ```
 
+See [registry-app-config.json](./etc/registry-app-config.json) for how to configure with csi-cam appimage from registry.
+
 ___
 
 ### Latest
@@ -30,6 +32,7 @@ sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppIm
 sudo chmod 755 /usr/local/bin/csi-cam
 ```
 
+See [local-app-config.json](./etc/local-app-config.json) for to configure with local csi-cam appimage.
 ___
 
 ### Develop

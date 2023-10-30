@@ -12,7 +12,7 @@
         "width_px": 1920,
         "height_px": 1080,
         "frame_rate": 30,
-        "debug": true
+        "debug": false
       },
       "depends_on": [],
       "name": "csicam_test",
