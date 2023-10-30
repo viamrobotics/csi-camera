@@ -63,7 +63,9 @@ dep:
 	apt-get -y install libgtest-dev && \
 	apt-get install -y gstreamer1.0-tools && \
 	apt-get install -y libgstreamer1.0-dev \
-    	libgstreamer-plugins-base1.0-dev
+		libgstreamer-plugins-base1.0-dev \
+		libgstreamer-plugins-good1.0-dev \
+		libgstreamer-plugins-bad1.0-dev
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
