@@ -4,7 +4,7 @@ ARG HUB_USER
 
 FROM ghcr.io/${HUB_USER}/${BASE_NAME}:${BASE_TAG}
 
-ENV DEBIAN_FRONTEND=noninteractiveAG}
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install GST dev files
 RUN apt-get update
