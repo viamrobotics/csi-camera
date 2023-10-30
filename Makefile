@@ -63,8 +63,8 @@ dep:
 	export TZ=America/New_York && \
 	apt-get update && \
 	apt-get -y install libgtest-dev && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y gstreamer1.0-tools && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y libgstreamer1.0-dev \
+	apt-get install -y gstreamer1.0-tools && \
+	apt-get install -y libgstreamer1.0-dev \
 		libgstreamer-plugins-base1.0-dev \
 		libgstreamer-plugins-good1.0-dev \
 		libgstreamer-plugins-bad1.0-dev
