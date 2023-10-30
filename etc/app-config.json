@@ -9,7 +9,6 @@
     {
       "model": "viam:camera:csi",
       "attributes": {
-        "video_path": "0",
         "width_px": 1920,
         "height_px": 1080,
         "frame_rate": 30,
