@@ -1,0 +1,25 @@
+{
+    "components": [
+      {
+        "name": "my-csi-camera",
+        "model": "viam:camera:csi",
+        "type": "camera",
+        "namespace": "rdk",
+        "attributes": {
+          "width_px": 1920,
+          "height_px": 1080,
+          "frame_rate": 60,
+          "debug": false
+        },
+        "depends_on": []
+      }
+    ],
+    "modules": [
+      {
+        "type": "registry",
+        "name": "viam_csi-cam",
+        "module_id": "viam:csi-cam",
+        "version": "0.2.0"
+      }
+    ]
+  }

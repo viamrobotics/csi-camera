@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - arch: [buildjet-2vcpu-ubuntu-2204-arm]
-            image: ghcr.io/seanavery/viam-cpp-jetson:0.0.1
+            image: ghcr.io/seanavery/viam-cpp-base:0.0.2
             platform: linux/arm64
     runs-on: ${{ matrix.arch }}
     container:

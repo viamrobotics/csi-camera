@@ -47,11 +47,11 @@ public:
     // Camera
     // overrides camera component interface
     void reconfigure(const Dependencies deps, const ResourceConfig cfg) override;
-    raw_image get_image(const std::string mime_type) override;
+    raw_image get_image(const std::string mime_type, const AttributeMap& extra) override;
     image_collection get_images() override;
     AttributeMap do_command(const AttributeMap command) override;
-    point_cloud get_point_cloud(const std::string mime_type) override;
-    std::vector<GeometryConfig> get_geometries() override;
+    point_cloud get_point_cloud(const std::string mime_type, const AttributeMap& extra) override;
+    std::vector<GeometryConfig> get_geometries(const AttributeMap& extra) override;
     properties get_properties() override;
 
     // GST 

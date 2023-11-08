@@ -4,13 +4,13 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-DOCK_TAG := 0.0.1
-BASE_TAG := 0.0.1
-L4T_TAG := 35.3.1
-BASE_NAME := viam-cpp-jetson
+BASE_NAME := viam-cpp-base
 MOD_NAME := viam-csi-module
 TEST_NAME := viam-csi-tests
 HUB_USER := seanavery
+DOCK_TAG := 0.0.1 # tag for mod/test images
+BASE_TAG := 0.0.2
+L4T_TAG := 35.3.1
 
 # Package
 PACK_NAME := viam-csi
@@ -59,11 +59,15 @@ bin:
 	cp ./etc/viam-csi-$(PACK_TAG)-aarch64.AppImage $(BIN_DIR)
 
 dep:
+	export DEBIAN_FRONTEND=noninteractive && \
+	export TZ=America/New_York && \
 	apt-get update && \
 	apt-get -y install libgtest-dev && \
 	apt-get install -y gstreamer1.0-tools && \
 	apt-get install -y libgstreamer1.0-dev \
-    	libgstreamer-plugins-base1.0-dev
+		libgstreamer-plugins-base1.0-dev \
+		libgstreamer-plugins-good1.0-dev \
+		libgstreamer-plugins-bad1.0-dev
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.

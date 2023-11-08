@@ -20,10 +20,10 @@ AppDir:
   files:
     include:
     - /usr/local/lib/libviamsdk.so.noabi
+    - /lib/aarch64-linux-gnu/libpthread*
     exclude:
     - usr/share/doc
     - usr/share/man
     - usr/lib/aarch64-linux-gnu/gconv
 AppImage:
   arch: aarch64
-  update-information: guess

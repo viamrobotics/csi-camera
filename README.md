@@ -5,37 +5,46 @@
 
 ___
 
-### User documentation
+### Getting Started
 
 For user documentation, see [Add a CSI Camera as a Modular Resource](https://docs.viam.com/extend/modular-resources/examples/csi/).
 
-### usage
+You can view more platform specific details at [JETSON.md](./doc/JETSON.md) and [PI.md](./doc/PI.md).
 
-1. Download appimage from releases page.
+_Note: On a Raspberry Pi, you must install GStreamer plugins before running the module._
+
+_WARNING: There is a known issue for Debian Bookworm due to changes in the libcamerasrc plugin._
+
 ```bash
-sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/viam-csi
+sudo apt install libcamera0 gstreamer1.0-x gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 ```
 
-```bash
-sudo chmod 755 /usr/local/bin/viam-csi
-```
-
-2. Run [viam-server](https://docs.viam.com/installation/) with example config file [etc/app-config.json](https://github.com/seanavery/viam-csi/blob/master/etc/app-config.json). View [JETSON.md](./doc/JETSON.md) for componenet attribute options.
-
-`viam-server` will automatically load the module. You can now head over to https://app.viam.com/ and view the control tab for the camera feed. If you do not see anything, check the logs tab for errors. 
+See [registry-app-config.json](./etc/registry-app-config.json) for how to configure with csi-cam appimage from registry.
 
 ___
 
-### develop
+### Latest
 
-View [DEVELOP.md](./doc/DEVELOP.md) for more information on how to build and run the module locally.
+To install the latest development version of the module, run the following commands:
+```bash
+sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
+```
 
-PRs and issues are welcome!
+```bash
+sudo chmod 755 /usr/local/bin/csi-cam
+```
+
+See [local-app-config.json](./etc/local-app-config.json) for how to configure with local csi-cam appimage.
+___
+
+### Develop
+
+View [DEVELOP.md](./doc/DEVELOP.md) for more information on how to build and run the module locally or in Docker. Pull Requests and Issues are welcome!
 
 ___
 
-### support
+### Support
 
 - [x] [Nvidia Jetson](./doc/JETSON.md)
-- [ ] Raspberry Pi
+- [x] [Raspberry Pi](./doc/PI.md)
 - [ ] Orange Pi
