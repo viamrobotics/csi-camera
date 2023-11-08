@@ -2,10 +2,10 @@
 
 ### Dependencies
 
-On a Raspberry Pi, you must install GStreamer plugins before running the module.
+On a Raspberry Pi, you must install GStreamer and plugins before running the module.
 
 ```bash
-sudo apt install libgstreamer-plugins-base1.0-dev 
+sudo apt install libcamera0 gstreamer1.0-x gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 ```
 
 ### Camera Attributes
