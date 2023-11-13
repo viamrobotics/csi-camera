@@ -2,7 +2,7 @@ ARG BASE_TAG
 ARG BASE_NAME
 ARG HUB_USER
 
-FROM ${BASE_NAME}:${BASE_TAG}
+FROM ghcr.io/${HUB_USER}/${BASE_NAME}:${BASE_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -44,8 +44,6 @@ RUN apt-get install libgmock-dev && \
     cmake .. && \
     make && \
     cp lib/*.a /usr/lib
-
-RUN apt-get install fakeroot libgtk-3-bin squashfs-tools -y
 
 ADD ../ /root/opt/src/csi-camera
 RUN cd /root/opt/src && \
