@@ -69,12 +69,34 @@ dep:
 	export DEBIAN_FRONTEND=noninteractive && \
 	export TZ=America/New_York && \
 	apt-get update && \
-	apt-get -y install libgtest-dev && \
-	apt-get install -y gstreamer1.0-tools && \
-	apt-get install -y libgstreamer1.0-dev \
-		libgstreamer-plugins-base1.0-dev \
-		libgstreamer-plugins-good1.0-dev \
-		libgstreamer-plugins-bad1.0-dev
+	if [ "$(TARGET)" = "jetson" ]; then \
+		apt-get -y install libgtest-dev && \
+		apt-get install -y gstreamer1.0-tools && \
+		apt-get install -y libgstreamer1.0-dev \
+			libgstreamer-plugins-base1.0-dev \
+			libgstreamer-plugins-good1.0-dev \
+			libgstreamer-plugins-bad1.0-dev; \
+	elif [ "$(TARGET)" = "pi" ]; then \
+		apt-get install -y --no-install-recommends software-properties-common && \
+		apt-add-repository 'deb http://archive.raspberrypi.org/debian/ bullseye main' && \
+		wget -qO - https://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add - && \
+		apt-get -y update && \
+		apt-get -y install libcamera0 libgstreamer1.0-dev libgstreamer1.0-0 gstreamer1.0-x gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev && \
+		apt-get -y install libgtest-dev && \
+		cd /usr/src/gtest && \
+		cmake CMakeLists.txt && \
+		make && \
+		cp lib/*.a /usr/lib && \
+		apt-get install libgmock-dev && \
+		cd /usr/src/googletest/googlemock/ && \
+		mkdir build && \
+		cmake .. && \
+		make && \
+		cp lib/*.a /usr/lib; \
+	else \
+		echo "Unknown TARGET"; \
+		exit 1; \
+	fi
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
