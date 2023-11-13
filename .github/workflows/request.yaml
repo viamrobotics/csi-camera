@@ -8,8 +8,15 @@ on:
 jobs:
   test-package:
     runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
+    strategy:
+     matrix:
+        include:
+          - container: ghcr.io/seanavery/viam-cpp-base:0.0.2
+            TARGET: jetson
+          - container: ghcr.io/seanavery/viam-cpp-base-pi:0.0.2
+            TARGET: pi
     container:
-      image: ghcr.io/seanavery/viam-cpp-base:0.0.2
+      image: ${{ matrix.container }}
       options: --platform linux/arm64
     steps:
     - name: Check out code
@@ -30,12 +37,7 @@ jobs:
     - name: Copy binary and appimage to bin folder
       run: make bin
 
-    - name: Run appimage in fresh L4T instance
+    - name: Run appimage in freshinstance
       run: |
-        make image-test TARGET=jetson
-        make test-package TARGET=jetson
-    
-    - name: Run appimage in fresh debian instance
-      run: |
-        make image-test TARGET=pi
-        make test-package TARGET=pi
+        make image-test
+        make test-package
