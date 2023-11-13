@@ -303,7 +303,6 @@ std::string CSICamera::create_pipeline() const {
         << "/1 ! " << device_params.video_converter
         << " ! " << device_params.output_encoder
         << " ! " << "image/jpeg"
-        // << " ! queue sync=false max-buffers=1 drop=true"
         << " ! appsink name=appsink0 sync=false max-buffers=1 drop=true";
 
     return oss.str();

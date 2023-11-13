@@ -1,7 +1,6 @@
 ARG BASE_TAG
 ARG BASE_NAME
 ARG HUB_USER
-
 FROM ghcr.io/${HUB_USER}/${BASE_NAME}:${BASE_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -24,4 +23,4 @@ ADD ../ /root/opt/src/csi-camera
 RUN cd /root/opt/src && \
     cd csi-camera && \
     make build && \
-    make package
+    make package TARGET=jetson
