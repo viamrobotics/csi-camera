@@ -4,12 +4,12 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-BASE_NAME := viam-cpp-base
-MOD_NAME := viam-csi-module
-TEST_NAME := viam-csi-tests
+# BASE_NAME := viam-cpp-base
+# MOD_NAME := viam-csi-module
 HUB_USER := seanavery
+TEST_NAME := viam-csi-test
 DOCK_TAG := 0.0.1 # tag for mod/test images
-BASE_TAG := 0.0.2
+BASE_TAG := 0.0.1
 L4T_TAG := 35.3.1
 
 # Package
@@ -19,10 +19,25 @@ PACK_TAG := latest
 # CLI
 TARGET ?= pi # [jetson,pi]
 TEST_BASE ?= debian:bookworm
+BASE_NAME ?= viam-cpp-base-pi
+BASE_CONFIG ?= ./etc/Dockerfile.base.bullseye
+MOD_NAME ?= viam-csi-module-pi
+MOD_CONFIG ?= ./etc/Dockerfile.mod.pi
+RECIPE ?= ./viam-csi-pi-arm64.yml
 ifeq ($(TARGET), jetson)
 	TEST_BASE=nvcr.io/nvidia/l4t-base:$(L4T_TAG)
+	BASE_NAME=viam-cpp-base-jetson
+	BASE_CONFIG=./etc/Dockerfile.base
+	MOD_NAME ?= viam-csi-module-jetson
+	MOD_CONFIG ?= ./etc/Dockerfile.mod
+	RECIPE ?= ./viam-csi-jetson-arm64.yml
 else ifeq ($(TARGET), pi)
 	TEST_BASE=debian:bookworm
+	BASE_NAME=viam-cpp-base-pi
+	BASE_CONFIG=./etc/Dockerfile.base.bullseye
+	MOD_NAME ?= viam-csi-module-pi
+	MOD_CONFIG ?= ./etc/Dockerfile.mod.pi
+	RECIPE ?= ./viam-csi-pi-arm64.yml
 endif
 
 # Module
@@ -41,7 +56,7 @@ package:
 	PACK_NAME=$(PACK_NAME) \
 	PACK_TAG=$(PACK_TAG) \
 	appimage-builder \
-		--recipe viam-csi-jetson-arm64.yml
+		--recipe $(RECIPE) \
 
 # Removes all build and bin artifacts.
 clean:
@@ -75,7 +90,7 @@ image-base:
 	docker build -t $(BASE_NAME):$(DOCK_TAG) \
 		--memory=16g \
 		--build-arg L4T_TAG=$(L4T_TAG) \
-		-f ./etc/Dockerfile.base.jetson ./
+		-f $(BASE_CONFIG) ./
 
 # Builds docker image with viam-csi installed.
 image-mod:
@@ -83,7 +98,7 @@ image-mod:
 		--build-arg BASE_TAG=$(BASE_TAG) \
 		--build-arg HUB_USER=$(HUB_USER) \
 		--build-arg BASE_NAME=$(BASE_NAME) \
-		-f ./etc/Dockerfile.mod ./
+		-f $(MOD_CONFIG) ./
 
 # Builds raw L4T docker image with viam-csi appimage.
 image-test:
