@@ -2,11 +2,11 @@
 
 ### Dependencies
 
-On a Raspberry Pi, you must install GStreamer and plugins before running the module.
+For the `csi-cam-pi` module, Gstreamer and Libcamera is bundled into the appimage. You do not need to install any dependencies.
 
-```bash
-sudo apt install libcamera0 gstreamer1.0-x gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
-```
+Make sure that the `/boot/config.txt` is configure to detect the camera. See [this guide](https://www.raspberrypi.com/documentation/computers/camera_software.html) for more information.
+
+___
 
 ### Camera Attributes
 

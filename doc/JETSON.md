@@ -2,7 +2,9 @@
 
 ### Dependencies
 
-On Jetson devices, GStreamer comes packaged with Jetpack, so no additional installations are required.
+On Jetson devices, GStreamer and Libargus plugin comes packaged with Jetpack. The appimage will dynamically link out to Gstreamer at runtime.
+
+___
 
 ### Camera Attributes
 
@@ -30,3 +32,4 @@ ____
 | Tool | Description |
 |------------------|-----------------|
 | test_jetson_pipeline.sh | Test script to see if GST and camera sensor are working. |
+| make restart-argus | Run this if argus backend gets into a bad state. |
