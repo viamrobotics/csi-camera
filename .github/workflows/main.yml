@@ -70,8 +70,7 @@ jobs:
           gzip: false
 
       - name: Get commit count
-          id: commit_count
-          run: echo "COMMIT_COUNT=$(git rev-list --count HEAD)" >> $GITHUB_EN
+        run: echo "COMMIT_COUNT=$(git rev-list --count HEAD)" >> $GITHUB_ENV
 
       - name: Get latest release version
         id: get_version
