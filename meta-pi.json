@@ -1,0 +1,14 @@
+{
+    "module_id": "viam:csi-cam-pi",
+    "visibility": "public",
+    "url": "https://github.com/viamrobotics/csi-camera/",
+    "description": "Module for CSI camera",
+    "models": [
+      {
+        "api": "rdk:component:camera",
+        "model": "viam:camera:csi"
+      }
+    ],
+    "entrypoint": "./bin/viam-csi-latest-aarch64.AppImage"
+  }
+  
