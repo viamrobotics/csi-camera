@@ -50,8 +50,6 @@ AppDir:
     path_mappings:
       - /usr/lib/aarch64-linux-gnu/libcamera/:$APPDIR/usr/lib/aarch64-linux-gnu/libcamera/ 
       - /usr/share/libcamera/:$APPDIR/usr/share/libcamera/
-    # path_mappings:
-    #   - /usr/lib/aarch64-linux-gnu/libcamera:$APPDIR/usr/lib/aarch64-linux-gnu/libcamera
-    #   - /usr/share/libcamera:$APPDIR/usr/share/libcamera
+
 AppImage:
   arch: aarch64
