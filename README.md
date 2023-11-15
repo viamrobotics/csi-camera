@@ -1,7 +1,7 @@
-# viam-csi
-> viam module for csi cams
+# CSI-CAM
+> A Viam Module for CSI Cameras
 
-![](./etc/viam-server.png)
+![Viam Server](./etc/viam-server.png)
 
 ___
 
@@ -17,11 +17,11 @@ Easily integrate CSI Cameras into your Viam projects using this camera module. F
 
 
 ### Configuration
-Configure `viam-server` with the csi-cam module using [registry-app-config.json](./etc/registry-app-config.json) as a reference.
+Configure `viam-server` with the csi-cam module through the [Viam Module Registry](https://app.viam.com/registry) using [registry-app-config.json](./etc/registry-app-config.json) as a reference.
 
 ___
 
-### Latest
+## Latest Version Installation
 
 Install the latest development version of the module on your device with these commands:
 
@@ -40,9 +40,9 @@ sudo wget http://packages.viam.com/apps/csi-camera/pi/viam-csi-latest-aarch64.Ap
 sudo chmod 755 /usr/local/bin/csi-cam
 ```
 
-Refer to [local-app-config.json](./etc/local-app-config.json) for configuration example with local `appimage`.
+Refer to [local-app-config.json](./etc/local-app-config.json) for configuration example with local appimage.
 ___
 
-### Develop
+## Development
 
 Interested in contributing? Check out [DEVELOP.md](./doc/DEVELOP.md) for guidelines on how to build and run the module `locally` or using `docker`. We welcome Pull Requests and Issues!
