@@ -2,7 +2,7 @@
 
 ## Docker Setup
 
-Docker is the preferred environment for development and testing. The following commands are used for building and testing the application in Docker containers.
+Docker is the preferred environment for development. The following commands are used for building and testing the application in Docker containers.
 
 ```bash
 make image-mod TARGET=[pi/jetson] # Build binary and create appimage
@@ -26,7 +26,7 @@ ___
 
 ## Local Setup
 
-For local development, first install the dependencies for the [viam-cpp-sdk](https://github.com/viamrobotics/viam-cpp-sdk). See example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal). Refer to the example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal) for guidance on setting up the environment.
+For local development, first install the dependencies for the [viam-cpp-sdk](https://github.com/viamrobotics/viam-cpp-sdk). Refer to the example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal) for guidance on setting up the environment.
 
 ```bash
 make build-sdk # Compile and install viam-cpp-sdk
