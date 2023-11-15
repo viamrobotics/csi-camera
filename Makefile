@@ -84,15 +84,12 @@ dep:
 		apt-get -y install libcamera0 libgstreamer1.0-dev libgstreamer1.0-0 gstreamer1.0-x gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev && \
 		apt-get -y install libgtest-dev && \
 		cd /usr/src/gtest && \
-		cmake CMakeLists.txt && \
+		cmake ./ && \
 		make && \
-		cp lib/*.a /usr/lib && \
 		apt-get install libgmock-dev && \
 		cd /usr/src/googletest/googlemock/ && \
-		mkdir build && \
-		cmake .. && \
-		make && \
-		cp lib/*.a /usr/lib; \
+		cmake ./ && \
+		make; \
 	else \
 		echo "Unknown TARGET"; \
 		exit 1; \
