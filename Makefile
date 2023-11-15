@@ -91,7 +91,8 @@ dep:
 		cmake ./ && \
 		make; \
 	else \
-		echo "Unknown TARGET"; \
+		echo "Unknown TARGET: $(TARGET)"; \
+		echo "Must be one of: jetson, pi" \
 		exit 1; \
 	fi
 	
