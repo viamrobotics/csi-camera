@@ -86,6 +86,7 @@ RUN pip install urllib3==1.26.12 requests==2.26.0
 RUN cd ${HOME}/opt/src && \
     git clone https://github.com/AppImageCrafters/appimage-builder.git && \
     cd appimage-builder && \
+    git checkout 42d32f11496de43a9f6a9ada7882a11296e357ca && \
     pip install ./
 
 # Install docker
