@@ -26,8 +26,6 @@ ___
 
 ## Local Setup
 
-First, install dependencies for [viam-cpp-sdk](https://github.com/viamrobotics/viam-cpp-sdk). See example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal) for reference.
-
 For local development, first install the dependencies for the [viam-cpp-sdk](https://github.com/viamrobotics/viam-cpp-sdk). See example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal). Refer to the example [dockerfile](https://github.com/viamrobotics/viam-cpp-sdk/blob/main/etc/docker/Dockerfile.ubuntu.focal) for guidance on setting up the environment.
 
 ```bash
