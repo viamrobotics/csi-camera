@@ -23,14 +23,14 @@ ___
 
 ### Latest
 
-To install the latest development version of the module, run the following commands.
+Install the latest development version of the module on your device with these commands:
 
 ### For Jetson Devices
 ```bash
 sudo wget http://packages.viam.com/apps/csi-camera/jetson/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
 ```
 
-### For Raspberry Pi devices:
+### For Raspberry Pi Devices
 ```bash
 sudo wget http://packages.viam.com/apps/csi-camera/pi/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
 ```
