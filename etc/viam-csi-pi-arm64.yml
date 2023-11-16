@@ -1,7 +1,7 @@
 # appimage-builder recipe see https://appimage-builder.readthedocs.io for details
 version: 1
 script:
-- rm -rf $TARGET_APPDIR | true
+- rm -rf $TARGET_APPDIR || true
 - mkdir -p "$TARGET_APPDIR/usr/bin"
 - cp ../build/viam-csi "$TARGET_APPDIR/usr/bin/viam-csi"
 - mkdir -p "$TARGET_APPDIR/usr/share/icons/viam/256x256/apps/"
