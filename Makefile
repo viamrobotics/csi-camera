@@ -107,9 +107,7 @@ image-base:
 # Builds docker image with viam-csi installed.
 image-mod:
 	docker build -t $(MOD_NAME):$(DOCK_TAG) \
-		--build-arg BASE_TAG=$(BASE_TAG) \
-		--build-arg HUB_USER=$(HUB_USER) \
-		--build-arg BASE_NAME=$(BASE_NAME) \
+		--build-arg BASE_IMG=ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG) \
 		-f $(MOD_CONFIG) ./
 
 # Builds raw L4T docker image with viam-csi appimage.
