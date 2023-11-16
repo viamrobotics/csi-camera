@@ -34,11 +34,13 @@ RUN apt-get -y install \
 RUN apt-get -y install libgtest-dev
 RUN cd /usr/src/gtest && \
     cmake ./ && \
-    make
+    make && \
+    cp lib/*.a /usr/lib;
 RUN apt-get install libgmock-dev && \
     cd /usr/src/googletest/googlemock/ && \
     cmake ./ && \
-    make
+    make && \
+    cp lib/*.a /usr/lib; 
 
 # Build and package the CSI camera driver
 ADD ../ /root/opt/src/csi-camera
