@@ -91,26 +91,8 @@ jobs:
         if: github.event_name == 'push'
         with:
           meta-path: ${{ env.META_PATH }}
-          module-path: module.tar.gz
+          module-path: bin/viam-csi-latest-aarch64.AppImage
           platform: linux/arm64
           version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ github.run_number }}
           key-id: ${{ secrets.viam_key_id }}
           key-value: ${{ secrets.viam_key_value }}
-
-# echo "GITHUB_REF=${{ github.ref }}"
-# echo "GITHUB_REF_NAME=${{ github.ref_name }}"
-# echo "GITHUB_REF_SLUG=${{ github.ref_slug }}"
-# echo "GITHUB_REF_TYPE=${{ github.ref_type }}"
-# echo "GITHUB_REPOSITORY=${{ github.repository }}"
-# echo "GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}"
-# echo "GITHUB_RUN_ID=${{ github.run_id }}"
-# echo "GITHUB_RUN_NUMBER=${{ github.run_number }}"
-# echo "GITHUB_RUN_AT=${{ github.run_at }}"
-# echo "GITHUB_ACTOR=${{ github.actor }}"
-# echo "GITHUB_WORKFLOW=${{ github.workflow }}"
-# echo "GITHUB_HEAD_REF=${{ github.head_ref }}"
-# echo "GITHUB_BASE_REF=${{ github.base_ref }}"
-# echo "GITHUB_EVENT_NAME=${{ github.event_name }}"
-# echo "GITHUB_EVENT_PATH=${{ github.event_path }}"
-# echo "GITHUB_WORKSPACE=${{ github.workspace }}"
-# echo "GITHUB_SHA=${{ github.sha }}"
