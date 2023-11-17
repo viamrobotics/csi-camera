@@ -75,19 +75,45 @@ jobs:
       - name: Get latest release version
         id: get_version
         run: |
+          apt install -y jq
           LATEST_RELEASE=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
           echo "LATEST_RELEASE_VERSION=$LATEST_RELEASE" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update module registry
-        uses: viamrobotics/upload-module@main
-        if: github.event_name == 'push'
-        with:
-          meta-path: ${{ env.META_PATH }}
-          module-path: module.tar.gz
-          platform: linux/arm64
-          version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}
-          key-id: ${{ secrets.viam_key_id }}
-          key-value: ${{ secrets.viam_key_value }}
+      - name: Testing module env variables
+        run: |
+          echo "TARGET=${{ env.TARGET }}"
+          echo "META_PATH=${{ env.META_PATH }}"
+          echo "COMMIT_COUNT=${{ env.COMMIT_COUNT }}"
+          echo "LATEST_RELEASE_VERSION=${{ env.LATEST_RELEASE_VERSION }}"
+          echo "version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}"
+# echo "GITHUB_REF=${{ github.ref }}"
+# echo "GITHUB_REF_NAME=${{ github.ref_name }}"
+# echo "GITHUB_REF_SLUG=${{ github.ref_slug }}"
+# echo "GITHUB_REF_TYPE=${{ github.ref_type }}"
+# echo "GITHUB_REPOSITORY=${{ github.repository }}"
+# echo "GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}"
+# echo "GITHUB_RUN_ID=${{ github.run_id }}"
+# echo "GITHUB_RUN_NUMBER=${{ github.run_number }}"
+# echo "GITHUB_RUN_AT=${{ github.run_at }}"
+# echo "GITHUB_ACTOR=${{ github.actor }}"
+# echo "GITHUB_WORKFLOW=${{ github.workflow }}"
+# echo "GITHUB_HEAD_REF=${{ github.head_ref }}"
+# echo "GITHUB_BASE_REF=${{ github.base_ref }}"
+# echo "GITHUB_EVENT_NAME=${{ github.event_name }}"
+# echo "GITHUB_EVENT_PATH=${{ github.event_path }}"
+# echo "GITHUB_WORKSPACE=${{ github.workspace }}"
+# echo "GITHUB_SHA=${{ github.sha }}"
+
+      # - name: Update module registry
+      #   uses: viamrobotics/upload-module@main
+      #   if: github.event_name == 'push'
+      #   with:
+      #     meta-path: ${{ env.META_PATH }}
+      #     module-path: module.tar.gz
+      #     platform: linux/arm64
+      #     version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}
+      #     key-id: ${{ secrets.viam_key_id }}
+      #     key-value: ${{ secrets.viam_key_value }}
 
