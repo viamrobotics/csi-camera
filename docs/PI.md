@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-For the `csi-cam-pi` module, Gstreamer and Libcamera is bundled into the appimage. You do not need to install any dependencies.
+For the `csi-cam-pi` module, Gstreamer and Libcamera are bundled into the appimage. You do not need to install any dependencies.
 
 Make sure that the `/boot/config.txt` is configured to detect the camera. See [this guide](https://www.raspberrypi.com/documentation/computers/camera_software.html) for more information. For example, if you are using the IMX 477, you should have the following lines in your `/boot/config.txt`:
 
