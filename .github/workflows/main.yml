@@ -84,7 +84,7 @@ jobs:
           echo "META_PATH=${{ env.META_PATH }}"
           echo "COMMIT_COUNT=${{ env.COMMIT_COUNT }}"
           echo "LATEST_RELEASE_VERSION=${{ env.LATEST_RELEASE_VERSION }}"
-          echo "version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}"
+          echo "version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ github.run_number }}"
 
       - name: Update module registry
         uses: viamrobotics/upload-module@main
