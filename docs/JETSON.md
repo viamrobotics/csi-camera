@@ -1,12 +1,12 @@
 # Jetson
 
-### Dependencies
+## Dependencies
 
 On Jetson devices, GStreamer and Libargus plugin comes packaged with Jetpack. The appimage will dynamically link out to Gstreamer at runtime.
 
 ___
 
-### Camera Attributes
+## Camera Attributes
 
 | Key Name    | Value Type | Description                                  |
 |-------------|------------|----------------------------------------------|
@@ -18,7 +18,7 @@ ___
 
 ___
 
-### Tested Setups
+## Tested Setups
 
 | Device | OS | Camera | Provider |
 |------------------|-----------------|-----------------|-----------------|
@@ -27,7 +27,7 @@ ___
 
 ____
 
-### Tools
+## Tools
 
 | Tool | Description |
 |------------------|-----------------|
