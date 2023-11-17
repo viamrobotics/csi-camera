@@ -11,7 +11,7 @@ on:
 jobs:
   appimage:
     name: Build/Test/Upload latest
-    runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
     strategy:
       matrix:
         include:
@@ -69,9 +69,6 @@ jobs:
           parent: false
           gzip: false
 
-      - name: Get commit count
-        run: echo "COMMIT_COUNT=$(git rev-list --count HEAD)" >> $GITHUB_ENV
-
       - name: Get latest release version
         id: get_version
         run: |
@@ -88,6 +85,18 @@ jobs:
           echo "COMMIT_COUNT=${{ env.COMMIT_COUNT }}"
           echo "LATEST_RELEASE_VERSION=${{ env.LATEST_RELEASE_VERSION }}"
           echo "version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}"
+
+      - name: Update module registry
+        uses: viamrobotics/upload-module@main
+        if: github.event_name == 'push'
+        with:
+          meta-path: ${{ env.META_PATH }}
+          module-path: module.tar.gz
+          platform: linux/arm64
+          version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ github.run_number }}
+          key-id: ${{ secrets.viam_key_id }}
+          key-value: ${{ secrets.viam_key_value }}
+
 # echo "GITHUB_REF=${{ github.ref }}"
 # echo "GITHUB_REF_NAME=${{ github.ref_name }}"
 # echo "GITHUB_REF_SLUG=${{ github.ref_slug }}"
@@ -105,15 +114,3 @@ jobs:
 # echo "GITHUB_EVENT_PATH=${{ github.event_path }}"
 # echo "GITHUB_WORKSPACE=${{ github.workspace }}"
 # echo "GITHUB_SHA=${{ github.sha }}"
-
-      # - name: Update module registry
-      #   uses: viamrobotics/upload-module@main
-      #   if: github.event_name == 'push'
-      #   with:
-      #     meta-path: ${{ env.META_PATH }}
-      #     module-path: module.tar.gz
-      #     platform: linux/arm64
-      #     version: ${{ env.LATEST_RELEASE_VERSION }}-${{ github.ref_name }}.${{ env.COMMIT_COUNT }}
-      #     key-id: ${{ secrets.viam_key_id }}
-      #     key-value: ${{ secrets.viam_key_value }}
-
