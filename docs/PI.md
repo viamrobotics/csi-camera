@@ -1,14 +1,19 @@
 # Raspberry Pi
 
-### Dependencies
+## Dependencies
 
-On a Raspberry Pi, you must install GStreamer and plugins before running the module.
+For the `csi-cam-pi` module, Gstreamer and Libcamera are bundled into the appimage. You do not need to install any dependencies.
+
+Make sure that the `/boot/config.txt` is configured to detect the camera. See [this guide](https://www.raspberrypi.com/documentation/computers/camera_software.html) for more information. For example, if you are using the IMX 477, you should have the following lines in your `/boot/config.txt`:
 
 ```bash
-sudo apt install libcamera0 gstreamer1.0-x gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+camera_auto_detect=0
+dtoverlay=imx477
 ```
 
-### Camera Attributes
+___
+
+## Camera Attributes
 
 | Key Name    | Value Type | Description                                  |
 |-------------|------------|----------------------------------------------|
@@ -19,7 +24,7 @@ sudo apt install libcamera0 gstreamer1.0-x gstreamer1.0-plugins-base gstreamer1.
 
 ___
 
-### Tested Setups
+## Tested Setups
 
 | Device | OS | Camera | Provider |
 |------------------|-----------------|-----------------|-----------------|
@@ -28,7 +33,7 @@ ___
 
 ____
 
-### Tools
+## Tools
 
 | Tool | Description |
 |------------------|-----------------|

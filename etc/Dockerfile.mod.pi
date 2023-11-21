@@ -1,0 +1,50 @@
+ARG BASE_IMG
+
+FROM ${BASE_IMG}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install software-properties-common to get apt-add-repository
+RUN apt-get -y update && apt-get install -y --no-install-recommends \
+    software-properties-common
+
+# Add the Raspberry Pi repository
+RUN apt-add-repository 'deb http://archive.raspberrypi.org/debian/ bullseye main'
+
+# Import the repository's signing key
+RUN wget -qO - https://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
+
+# Update the package list
+RUN apt-get -y update
+
+# Install GST dev files
+RUN apt-get -y install \
+    libcamera0 \
+    libgstreamer1.0-dev \
+    libgstreamer1.0-0 \
+    gstreamer1.0-x \
+    gstreamer1.0-tools \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+    libgstreamer-plugins-base1.0-dev
+
+# Install GoogleTest
+RUN apt-get -y install libgtest-dev
+RUN cd /usr/src/gtest && \
+    cmake ./ && \
+    make && \
+    cp lib/*.a /usr/lib;
+RUN apt-get install libgmock-dev && \
+    cd /usr/src/googletest/googlemock/ && \
+    cmake ./ && \
+    make && \
+    cp lib/*.a /usr/lib; 
+
+# Build and package the CSI camera driver
+ADD ../ /root/opt/src/csi-camera
+RUN cd /root/opt/src && \
+    cd csi-camera && \
+    make build && \
+    make package TARGET=pi

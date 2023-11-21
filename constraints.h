@@ -5,7 +5,7 @@
 #define RESOURCE_TYPE "CSICamera"
 #define API_NAMESPACE "viam"
 #define API_TYPE "camera"
-#define API_SUBTYPE "csi"
+#define DEFAULT_API_SUBTYPE "csi"
 
 // GST
 #define GST_GET_STATE_TIMEOUT 1 
@@ -23,12 +23,14 @@
 #define DEFAULT_OUTPUT_MIMETYPE "image/jpeg"
 
 // Jetson
+#define JETSON_API_SUBTYPE "csi"
 #define JETSON_INPUT_SOURCE "nvarguscamerasrc"
 #define JETSON_INPUT_FORMAT "video/x-raw(memory:NVMM)"
 #define JETSON_VIDEO_CONVERTER "nvvidconv"
 #define JETSON_OUTPUT_ENCODER "nvjpegenc"
 
 // Pi
+#define PI_API_SUBTYPE "csi-pi"
 #define PI_INPUT_SOURCE "libcamerasrc"
 #define PI_INPUT_FORMAT "video/x-raw"
 #define PI_VIDEO_CONVERTER "videoconvert"

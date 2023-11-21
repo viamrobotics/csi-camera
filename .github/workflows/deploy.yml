@@ -5,44 +5,56 @@ on:
 
 jobs:
   publish:
-    runs-on: [buildjet-2vcpu-ubuntu-2204-arm]
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    strategy:
+     matrix:
+        include:
+          - container: ghcr.io/seanavery/viam-cpp-base:0.0.2
+            TARGET: jetson
+            META_PATH: meta.json
+          - container: ghcr.io/seanavery/viam-cpp-base-pi:0.0.2
+            TARGET: pi
+            META_PATH: meta-pi.json
     container:
-      image: ghcr.io/seanavery/viam-cpp-base:0.0.2
+      image: ${{ matrix.container }}
       options: --platform linux/arm64
+
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    - name: Clean build artifacts
-      run: make clean
+      - name: Set environment variables
+        run: |
+          echo "TARGET=${{ matrix.TARGET }}" >> $GITHUB_ENV
+          echo "META_PATH=${{ matrix.META_PATH }}" >> $GITHUB_ENV
 
-    - name: Install module dependencies
-      run: make dep
+      - name: Clean build artifacts
+        run: make clean
 
-    - name: Build viam-csi binary
-      run: make build
+      - name: Install module dependencies
+        run: make dep
 
-    - name: Build viam-csi appimage
-      run: make package
+      - name: Build viam-csi binary
+        run: make build
 
-    - name: Copy binary and appimage to bin folder and archive
-      run: make bin && tar czf module.tar.gz ./bin/*.AppImage
+      - name: Build viam-csi appimage
+        run: make package
 
-    - name: Run appimage in fresh L4T instance
-      run: |
-       make image-test TARGET=jetson
-       make test-package TARGET=jetson
+      - name: Copy binary and appimage to bin folder and archive
+        run: make bin && tar czf module.tar.gz ./bin/*.AppImage
 
-    - name: Run appimage in fresh debian instance
-      run: |
-        make image-test TARGET=pi
-        make test-package TARGET=pi
+      - name: Run appimage in fresh instance
+        run: |
+          make image-test
+          make test-package
 
-    - uses: viamrobotics/upload-module@main
-      if: github.event_name == 'release'
-      with:
-        module-path: module.tar.gz
-        platform: linux/arm64
-        version: ${{ github.ref_name }}
-        key-id: ${{ secrets.viam_key_id }}
-        key-value: ${{ secrets.viam_key_value }}
+      - name: Upload Module
+        uses: viamrobotics/upload-module@main
+        if: github.event_name == 'release'
+        with:
+          meta-path: ${{ env.META_PATH }}
+          module-path: bin/viam-csi-latest-aarch64.AppImage
+          platform: linux/arm64
+          version: ${{ github.ref_name }}
+          key-id: ${{ secrets.viam_key_id }}
+          key-value: ${{ secrets.viam_key_value }}
