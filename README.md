@@ -12,8 +12,8 @@ ___
 Easily integrate CSI Cameras into your Viam projects using this camera module. For detailed user documentation, visit [Add a CSI Camera as a Modular Resource](https://docs.viam.com/extend/modular-resources/examples/csi/).
 
 ### Supported Modules
-- **Nvidia Jetson**: Use the `csi-cam` module. [More Info](./doc/JETSON.md)
-- **Raspberry Pi**: Use the `csi-cam-pi` module. [More Info](./doc/PI.md)
+- **Nvidia Jetson**: Use the `csi-cam` module. [More Info](./docs/JETSON.md)
+- **Raspberry Pi**: Use the `csi-cam-pi` module. [More Info](./docs/PI.md)
 
 
 ### Configuration
@@ -45,4 +45,4 @@ ___
 
 ## Development
 
-Interested in contributing? Check out [DEVELOP.md](./doc/DEVELOP.md) for guidelines on how to build and run the module `locally` or using `docker`. We welcome Pull Requests and Issues!
+Interested in contributing? Check out [DEVELOP.md](./docs/DEVELOP.md) for guidelines on how to build and run the module `locally` or using `docker`. We welcome Pull Requests and Issues!
