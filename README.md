@@ -17,6 +17,12 @@ _Note: On a Raspberry Pi, you must install GStreamer plugins before running the 
 _WARNING: There is a known issue for Debian Bookworm due to changes in the libcamerasrc plugin._
 ___
 
+## Requirements
+
+The `csi-cam` module is distributed as an AppImage. AppImages require FUSE version 2 to run. See [FUSE troubleshooting](https://docs.viam.com/appendix/troubleshooting/#appimages-require-fuse-to-run) for instructions on installing FUSE 2 on your system if it is not already installed.
+
+Currently, the `csi-cam` module supports the Linux platform only.
+
 ## Usage
 
 To use this module, follow these instructions to [add a module from the Viam Registry](https://docs.viam.com/registry/configure/#add-a-modular-resource-from-the-viam-registry) and select the `viam:camera:csi` model from the [`csi-cam` module](https://app.viam.com/module/viam/csi-cam).
@@ -49,7 +55,6 @@ If you do not see anything, check the logs tab for errors.
 
 The following attributes are available for `viam:camera:csi` cameras:
 
-<!-- prettier-ignore -->
 | Name | Type | Inclusion | Description |
 | ---- | ---- | --------- | ----------- |
 | `width_px` | int | Optional | Width of the image this camera captures in pixels. <br> Default: `1920` |
@@ -58,14 +63,18 @@ The following attributes are available for `viam:camera:csi` cameras:
 | `video_path` | string | Optional | The filepath to the input sensor of this camera on your board. If none is given, your robot will attempt to detect the video path automatically. <br> Default: `"0"` </br>  |
 | `debug` | boolean | Optional | Whether or not you want debug input from this camera in your robot's logs. <br> Default: `false` |
 
+Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of your robot in the Viam app to make sure your camera has connected and no errors are being raised.
+
 ### Example Configuration
 
 ```json
 {
   "modules": [
     {
-      "executable_path": "/usr/local/bin/viam-csi",
-      "name": "csi_cam_module"
+      "type": "registry",
+      "name": "viam_csi-cam",
+      "module_id": "viam:csi-cam",
+      "version": "0.2.0"
     }
   ],
   "components": [
