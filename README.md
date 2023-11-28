@@ -192,8 +192,6 @@ Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of y
   ]
 }
 ```
-
-Refer to [local-app-config.json](./etc/local-app-config.json) for configuration example with local appimage.
 ___
 
 ## Development
