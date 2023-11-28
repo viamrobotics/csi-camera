@@ -191,10 +191,6 @@ Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of y
     }
   ]
 }
-=======
-### Set Permissions
-```bash
-sudo chmod 755 /usr/local/bin/csi-cam
 ```
 
 Refer to [local-app-config.json](./etc/local-app-config.json) for configuration example with local appimage.
