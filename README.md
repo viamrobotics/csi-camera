@@ -73,7 +73,7 @@ Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of y
       "type": "registry",
       "name": "viam_csi-cam",
       "module_id": "viam:csi-cam",
-      "version": "0.2.0"
+      "version": "0.3.0"
     }
   ],
   "components": [
