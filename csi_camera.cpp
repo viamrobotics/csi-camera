@@ -107,12 +107,15 @@ Camera::properties CSICamera::get_properties() {
 
 void CSICamera::init_csi(const std::string pipeline_args) {
     // Build gst pipeline
+    GError *error = nullptr;
     pipeline = gst_parse_launch(
         pipeline_args.c_str(),
-        nullptr
+        &error
     );
     if (!pipeline) {
         std::cerr << "Failed to create the pipeline" << std::endl;
+        g_print("Error: %s\n", error->message);
+        g_error_free(error);
         std::exit(EXIT_FAILURE);
     }
 
@@ -300,7 +303,6 @@ std::string CSICamera::create_pipeline() const {
         << "/1 ! " << device_params.video_converter
         << " ! " << device_params.output_encoder
         << " ! " << "image/jpeg"
-        << " ! queue sync=false max-buffers=1 drop=true"
         << " ! appsink name=appsink0 sync=false max-buffers=1 drop=true";
 
     return oss.str();

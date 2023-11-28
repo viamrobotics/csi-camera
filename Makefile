@@ -4,10 +4,8 @@ INSTALL_DIR := $(BUILD_DIR)/AppDir
 BIN_DIR := ./bin
 
 # Docker
-BASE_NAME := viam-cpp-base
-MOD_NAME := viam-csi-module
-TEST_NAME := viam-csi-tests
 HUB_USER := seanavery
+TEST_NAME := viam-csi-test
 DOCK_TAG := 0.0.1 # tag for mod/test images
 BASE_TAG := 0.0.2
 L4T_TAG := 35.3.1
@@ -18,11 +16,20 @@ PACK_TAG := latest
 
 # CLI
 TARGET ?= pi # [jetson,pi]
-TEST_BASE ?= debian:bookworm
 ifeq ($(TARGET), jetson)
 	TEST_BASE=nvcr.io/nvidia/l4t-base:$(L4T_TAG)
+	BASE_NAME=viam-cpp-base
+	BASE_CONFIG=./etc/Dockerfile.base
+	MOD_NAME=viam-csi-module-jetson
+	MOD_CONFIG=./etc/Dockerfile.mod
+	RECIPE=./viam-csi-jetson-arm64.yml
 else ifeq ($(TARGET), pi)
 	TEST_BASE=debian:bookworm
+	BASE_NAME=viam-cpp-base-pi
+	BASE_CONFIG=./etc/Dockerfile.base.bullseye
+	MOD_NAME=viam-csi-module-pi
+	MOD_CONFIG=./etc/Dockerfile.mod.pi
+	RECIPE=./viam-csi-pi-arm64.yml
 endif
 
 # Module
@@ -41,7 +48,7 @@ package:
 	PACK_NAME=$(PACK_NAME) \
 	PACK_TAG=$(PACK_TAG) \
 	appimage-builder \
-		--recipe viam-csi-jetson-arm64.yml
+		--recipe $(RECIPE) \
 
 # Removes all build and bin artifacts.
 clean:
@@ -62,28 +69,46 @@ dep:
 	export DEBIAN_FRONTEND=noninteractive && \
 	export TZ=America/New_York && \
 	apt-get update && \
-	apt-get -y install libgtest-dev && \
-	apt-get install -y gstreamer1.0-tools && \
-	apt-get install -y libgstreamer1.0-dev \
-		libgstreamer-plugins-base1.0-dev \
-		libgstreamer-plugins-good1.0-dev \
-		libgstreamer-plugins-bad1.0-dev
+	if [ "$(TARGET)" = "jetson" ]; then \
+		apt-get -y install libgtest-dev && \
+		apt-get install -y gstreamer1.0-tools && \
+		apt-get install -y libgstreamer1.0-dev \
+			libgstreamer-plugins-base1.0-dev \
+			libgstreamer-plugins-good1.0-dev \
+			libgstreamer-plugins-bad1.0-dev; \
+	elif [ "$(TARGET)" = "pi" ]; then \
+		apt-get install -y --no-install-recommends software-properties-common && \
+		apt-add-repository 'deb http://archive.raspberrypi.org/debian/ bullseye main' && \
+		wget -qO - https://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add - && \
+		apt-get -y update && \
+		apt-get -y install libcamera0 libgstreamer1.0-dev libgstreamer1.0-0 gstreamer1.0-x gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev && \
+		apt-get -y install libgtest-dev && \
+		cd /usr/src/gtest && \
+		cmake ./ && \
+		make && \
+		apt-get install libgmock-dev && \
+		cd /usr/src/googletest/googlemock/ && \
+		cmake ./ && \
+		make; \
+	else \
+		echo "Unknown TARGET: $(TARGET)"; \
+		echo "Must be one of: jetson, pi" \
+		exit 1; \
+	fi
 	
 # Docker
 # Builds docker image with viam-cpp-sdk and helpers.
 image-base:
-	docker build -t $(BASE_NAME):$(DOCK_TAG) \
+	docker build -t $(BASE_NAME):$(BASE_TAG) \
 		--memory=16g \
 		--build-arg L4T_TAG=$(L4T_TAG) \
-		-f ./etc/Dockerfile.base.jetson ./
+		-f $(BASE_CONFIG) ./
 
 # Builds docker image with viam-csi installed.
 image-mod:
 	docker build -t $(MOD_NAME):$(DOCK_TAG) \
-		--build-arg BASE_TAG=$(BASE_TAG) \
-		--build-arg HUB_USER=$(HUB_USER) \
-		--build-arg BASE_NAME=$(BASE_NAME) \
-		-f ./etc/Dockerfile.mod ./
+		--build-arg BASE_IMG=ghcr.io/$(HUB_USER)/$(BASE_NAME):$(BASE_TAG) \
+		-f $(MOD_CONFIG) ./
 
 # Builds raw L4T docker image with viam-csi appimage.
 image-test:

@@ -9,6 +9,7 @@
 
 #include "constraints.h"
 #include "csi_camera.h"
+#include "utils.h"
 
 using namespace viam::sdk;
 
@@ -24,18 +25,22 @@ int serve(const std::string& socket_path) {
         return EXIT_FAILURE;
     }
 
+    // Device type and params
+    auto device = get_device_type();
+    auto api_params = get_api_params(device);
+
     // Model registration
     auto module_registration = std::make_shared<ModelRegistration>(
         ResourceType{RESOURCE_TYPE},
         Camera::static_api(),
-        Model{API_NAMESPACE, API_TYPE, API_SUBTYPE},
+        Model{api_params.api_namespace, api_params.api_type, api_params.api_subtype},
         [](Dependencies, ResourceConfig resource_config) -> std::shared_ptr<Resource> {
             return std::make_shared<CSICamera>(resource_config.name(), resource_config.attributes());
         });
 
     try {
         Registry::register_model(module_registration);
-        std::cout << "registered model: " << API_NAMESPACE <<  ":" << API_TYPE << ":" << API_SUBTYPE << std::endl;
+        std::cout << "registered model: " << api_params.api_namespace <<  ":" << api_params.api_type << ":" << api_params.api_subtype << std::endl;
     } catch (const std::runtime_error& e) {
         std::cerr << "error registering model: " << e.what() << std::endl;
         return EXIT_FAILURE;

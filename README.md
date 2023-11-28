@@ -1,16 +1,17 @@
-# viam-csi
-> viam module for csi cams
+# CSI-CAM
+> A Viam Module for CSI Cameras
 
-![](./etc/viam-server.png)
+![Viam Server](./etc/viam-server.png)
 
 ___
 
 ## CSI Camera Module
 
-`viam-csi` is a [Viam module](https://docs.viam.com/extend/modular-resources/) for implementing CSI camera on Viam-powered machines.
-It includes a simple wrapper around [GStreamer](https://gstreamer.freedesktop.org/documentation/?gi-language=c) and an interface that satisfies a [Viam Camera component](https://docs.viam.com/components/camera/). This means you can utilize the hardware accelerated GST plugins on your Jetson with the Viam ecosystem with the `csi-cam` model, or your Pi with the `csi-cam-pi` model.
+Easily integrate CSI Cameras into your Viam projects using this camera module.
 
-You can view more platform specific details at [JETSON.md](./doc/JETSON.md) and [PI.md](./doc/PI.md).
+### Supported Modules
+- **Nvidia Jetson**: Use the `csi-cam` module. [More Info](./docs/JETSON.md)
+- **Raspberry Pi**: Use the `csi-cam-pi` module. [More Info](./docs/PI.md)
 ___
 
 ## `csi-cam` model for Jetson boards
@@ -94,15 +95,18 @@ Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of y
 ```
 ___
 
-### Build from local appimage
+## Latest Version Installation
 
-To install the latest development version of the module, run the following commands:
+Install the latest development version of the module on your device with these commands:
+
+### For Jetson Devices
 ```bash
-sudo wget http://packages.viam.com/apps/csi-camera/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
+sudo wget http://packages.viam.com/apps/csi-camera/jetson/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
 ```
 
+### For Raspberry Pi Devices
 ```bash
-sudo chmod 755 /usr/local/bin/csi-cam
+sudo wget http://packages.viam.com/apps/csi-camera/pi/viam-csi-latest-aarch64.AppImage -O /usr/local/bin/csi-cam
 ```
 
 See [local-app-config.json](./etc/local-app-config.json) for how to configure with local csi-cam appimage.
@@ -187,12 +191,15 @@ Once configured, check the [Logs tab](https://docs.viam.com/program/debug/) of y
     }
   ]
 }
+=======
+### Set Permissions
+```bash
+sudo chmod 755 /usr/local/bin/csi-cam
 ```
 
+Refer to [local-app-config.json](./etc/local-app-config.json) for configuration example with local appimage.
 ___
 
-### Support
+## Development
 
-- [x] [Nvidia Jetson](./doc/JETSON.md)
-- [x] [Raspberry Pi](./doc/PI.md)
-- [ ] Orange Pi
+Interested in contributing? Check out [DEVELOP.md](./docs/DEVELOP.md) for guidelines on how to build and run the module `locally` or using `docker`. We welcome Pull Requests and Issues!
