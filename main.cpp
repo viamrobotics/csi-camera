@@ -31,7 +31,6 @@ int serve(const std::string& socket_path) {
 
     // Model registration
     auto module_registration = std::make_shared<ModelRegistration>(
-        ResourceType{RESOURCE_TYPE},
         Camera::static_api(),
         Model{api_params.api_namespace, api_params.api_type, api_params.api_subtype},
         [](Dependencies, ResourceConfig resource_config) -> std::shared_ptr<Resource> {
