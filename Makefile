@@ -7,8 +7,8 @@ BIN_DIR := ./bin
 HUB_USER := seanavery
 TEST_NAME := viam-csi-test
 DOCK_TAG := 0.0.1 # tag for mod/test images
-BASE_TAG := 0.0.2
-L4T_TAG := 35.3.1
+BASE_TAG := 0.0.3
+L4T_TAG := 35.4.1
 
 # Package
 PACK_NAME := viam-csi
@@ -18,8 +18,8 @@ PACK_TAG := latest
 TARGET ?= pi # [jetson,pi]
 ifeq ($(TARGET), jetson)
 	TEST_BASE=nvcr.io/nvidia/l4t-base:$(L4T_TAG)
-	BASE_NAME=viam-cpp-base
-	BASE_CONFIG=./etc/Dockerfile.base
+	BASE_NAME=viam-cpp-base-jetson
+	BASE_CONFIG=./etc/Dockerfile.base.l4t
 	MOD_NAME=viam-csi-module-jetson
 	MOD_CONFIG=./etc/Dockerfile.mod
 	RECIPE=./viam-csi-jetson-arm64.yml
@@ -120,10 +120,10 @@ image-test:
 
 # Copies binary and appimage from container to host.
 bin-mod:
-	rm -rf $(BIN_DIR) | true && \
+	rm -rf $(BIN_DIR) || true && \
 	mkdir -p $(BIN_DIR) && \
-	docker stop viam-csi-bin | true && \
-	docker rm viam-csi-bin | true && \
+	docker stop viam-csi-bin || true && \
+	docker rm viam-csi-bin || true && \
 	docker run -d -it --name viam-csi-bin $(MOD_NAME):$(DOCK_TAG) && \
 	docker cp viam-csi-bin:/root/opt/src/csi-camera/build/viam-csi ./$(BIN_DIR) && \
 	docker cp viam-csi-bin:/root/opt/src/csi-camera/etc/viam-csi-$(PACK_TAG)-aarch64.AppImage ./$(BIN_DIR) && \
