@@ -28,7 +28,6 @@ AppDir:
     - sourceline: deb http://archive.raspberrypi.org/debian/ bullseye main
     include:
     - libgstreamer1.0-0:arm64
-    - libcamera0:arm64 
     - gstreamer1.0-x:arm64
     - gstreamer1.0-plugins-base:arm64
     - gstreamer1.0-plugins-good:arm64
@@ -40,12 +39,12 @@ AppDir:
     - /lib/aarch64-linux-gnu/libpthread*
     - /usr/lib/aarch64-linux-gnu/gstreamer-1.0/*
     - /usr/lib/aarch64-linux-gnu/libcamera*
+    - /usr/lib/aarch64-linux-gnu/libcamera/*
     - /usr/lib/libgst*
-    - /usr/share/libcamera*
+    - /usr/share/libcamera/*
     exclude:
     - usr/share/doc
     - usr/share/man
-    # - usr/lib/aarch64-linux-gnu/gconv
   runtime:
     path_mappings:
       - /usr/lib/aarch64-linux-gnu/libcamera/:$APPDIR/usr/lib/aarch64-linux-gnu/libcamera/ 
