@@ -53,16 +53,6 @@ RUN cd ${HOME}/opt/src && \
     ninja -C build install
 RUN rm -rf ${HOME}/opt/src/libcamera
 
-# Set the environment variables for GStreamer plugin path and library path
-# ENV GST_PLUGIN_PATH=/usr/local/lib/aarch64-linux-gnu/gstreamer-1.0
-# ENV LD_LIBRARY_PATH=/usr/local/lib/aarch64-linux-gnu:$LD_LIBRARY_PATH
-
-# # Remove GStreamer registry cache to force it to rebuild
-# RUN rm -f ~/.cache/gstreamer-1.0/registry*.bin
-
-# # Re-run gst-inspect to rebuild the GStreamer registry
-# RUN gst-inspect-1.0
-
 # Build and package the CSI camera driver
 ADD ../ /root/opt/src/csi-camera
 RUN cd /root/opt/src && \
