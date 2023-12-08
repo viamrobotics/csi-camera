@@ -81,7 +81,16 @@ dep:
 		apt-add-repository 'deb http://archive.raspberrypi.org/debian/ bullseye main' && \
 		wget -qO - https://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add - && \
 		apt-get -y update && \
-		apt-get -y install libcamera0 libgstreamer1.0-dev libgstreamer1.0-0 gstreamer1.0-x gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libgstreamer-plugins-base1.0-dev && \
+		apt-get -y install libcamera0 \
+			libgstreamer1.0-dev \
+			libgstreamer1.0-0 \
+			gstreamer1.0-x \
+			gstreamer1.0-tools \
+			gstreamer1.0-plugins-base \
+			gstreamer1.0-plugins-good \
+			gstreamer1.0-plugins-bad \
+			gstreamer1.0-plugins-ugly \
+			libgstreamer-plugins-base1.0-dev && \
 		apt-get -y install libgtest-dev && \
 		cd /usr/src/gtest && \
 		cmake ./ && \
@@ -89,7 +98,16 @@ dep:
 		apt-get install libgmock-dev && \
 		cd /usr/src/googletest/googlemock/ && \
 		cmake ./ && \
-		make; \
+		make && \
+		mkdir -p ${HOME}/opt/src && \
+		apt-get -y install meson && \
+		apt-get -y install libyaml-dev python3-yaml python3-ply python3-jinja2 && \
+		cd ${HOME}/opt/src && \
+		git clone https://github.com/raspberrypi/libcamera.git && \
+		cd libcamera && \
+		meson setup build --prefix=/usr && \
+		ninja -C build install && \
+		rm -rf ${HOME}/opt/src/libcamera; \
 	else \
 		echo "Unknown TARGET: $(TARGET)"; \
 		echo "Must be one of: jetson, pi" \
