@@ -28,6 +28,7 @@ ___
 
 | Device | OS | Camera | Provider |
 |------------------|-----------------|-----------------|-----------------|
+| Raspberry Pi 5 | Debian Bookworm | OV5647 | Arducam |
 | Raspberry Pi 4B | Debian Bullseye | RPI GS Camera | Raspberry Pi |
 | Raspberry Pi 4B | Debian Bookworm | IMX 477 | Arducam |
 
